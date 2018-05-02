@@ -1,8 +1,25 @@
 <resources>
     <string name="app_name">Morbidity</string>
+    <string name="strBtnBirthday">Set Birthday...</string>
+    <string name="strBirthday">%1$d %2$s %3$d</string>
+    <string name="strBtnDone">Done</string>
     <string-array name="sexes">
         <item>Male</item>
         <item>Female</item>
+    </string-array>
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
     </string-array>
     <string-array name="countries">
         <item>Afghanistan</item>

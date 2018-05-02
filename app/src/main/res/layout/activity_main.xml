@@ -11,14 +11,23 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:id="@+id/btnBirthday"/>
+        android:id="@+id/btnBirthday"
+        android:text="@string/strBtnBirthday"/>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:gravity="center_horizontal"
         android:id="@+id/spnSex"
         />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:gravity="center_horizontal"
         android:id="@+id/spnCountry" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:id="@+id/btnDone"
+        android:text="@string/strBtnDone"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>
