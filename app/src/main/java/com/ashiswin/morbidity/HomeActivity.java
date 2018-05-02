@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     Date birthday;
     String sex;
     String country;
+    int sexIndex;
 
     TextView txtDays, txtHours, txtMinutes, txtSeconds;
     Calendar c;
@@ -44,6 +45,8 @@ public class HomeActivity extends AppCompatActivity {
         sex = preferences.getString(Constants.PREF_SEX, "");
         country = preferences.getString(Constants.PREF_COUNTRY, "");
 
+        sexIndex = (sex.equals("male")) ? 0 : 1;
+
         txtDays = findViewById(R.id.txtDays);
         txtHours = findViewById(R.id.txtHours);
         txtMinutes = findViewById(R.id.txtMinutes);
@@ -54,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void run() {
                 c = Calendar.getInstance();
-                long difference = (birthday.getTime() - c.getTimeInMillis() + (80L * 31536000L * 1000L)) / 1000;
+                long difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
 
                 final long days = difference / (24L * 60L * 60L);
                 difference = difference % (24 * 60 * 60);
