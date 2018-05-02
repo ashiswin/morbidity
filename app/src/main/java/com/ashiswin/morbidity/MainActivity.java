@@ -1,6 +1,7 @@
 package com.ashiswin.morbidity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import com.ashiswin.morbidity.utils.Constants;
 import com.ashiswin.morbidity.utils.DatePickerFragment;
 
 import java.text.ParseException;
@@ -22,7 +24,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private final SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
 
     private Button btnBirthday, btnDone;
     private Spinner spnSex, spnCountry;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String[] months = getResources().getStringArray(R.array.months);
                         try {
-                            birthday = birthdayFormat.parse(year + "-" + (month + 1) + "-" + dayOfMonth);
+                            birthday = Constants.BIRTHDAY_FORMAT.parse(year + "-" + (month + 1) + "-" + dayOfMonth + " 00:00:00");
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -71,9 +72,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("birthday", birthdayFormat.format(birthday));
-                editor.putString("country", (String) spnCountry.getSelectedItem());
-                editor.putString("sex", (String) spnSex.getSelectedItem());
+                editor.putString(Constants.PREF_BIRTHDAY, Constants.BIRTHDAY_FORMAT.format(birthday));
+                editor.putString(Constants.PREF_COUNTRY, (String) spnCountry.getSelectedItem());
+                editor.putString(Constants.PREF_SEX, (String) spnSex.getSelectedItem());
+                editor.apply();
+
+                Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(homeIntent);
+                finish();
             }
         });
     }
