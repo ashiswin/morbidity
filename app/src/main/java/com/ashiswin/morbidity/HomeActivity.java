@@ -2,17 +2,24 @@ package com.ashiswin.morbidity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.utils.Constants;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -28,7 +35,6 @@ public class HomeActivity extends AppCompatActivity {
     String country;
     int sexIndex;
 
-    TextView txtDays, txtHours, txtMinutes, txtSeconds;
     TextView txtTimeLeft;
 
     Calendar c;
@@ -38,6 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         getSupportActionBar().setElevation(0);
+        centerTitle();
+        getSupportActionBar().setTitle("TIMER");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
 
@@ -59,6 +67,8 @@ public class HomeActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                if(birthday == null) return;
+
                 c = Calendar.getInstance();
                 long difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
 
@@ -111,4 +121,33 @@ public class HomeActivity extends AppCompatActivity {
         return(super.onOptionsItemSelected(item));
     }
 
+
+    private void centerTitle() {
+        ArrayList<View> textViews = new ArrayList<>();
+
+        getWindow().getDecorView().findViewsWithText(textViews, getTitle(), View.FIND_VIEWS_WITH_TEXT);
+
+        if(textViews.size() > 0) {
+            AppCompatTextView appCompatTextView = null;
+            if(textViews.size() == 1) {
+                appCompatTextView = (AppCompatTextView) textViews.get(0);
+            } else {
+                for(View v : textViews) {
+                    if(v.getParent() instanceof Toolbar) {
+                        appCompatTextView = (AppCompatTextView) v;
+                        break;
+                    }
+                }
+            }
+
+            if(appCompatTextView != null) {
+                ViewGroup.LayoutParams params = appCompatTextView.getLayoutParams();
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                appCompatTextView.setLayoutParams(params);
+                appCompatTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                appCompatTextView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                appCompatTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            }
+        }
+    }
 }
