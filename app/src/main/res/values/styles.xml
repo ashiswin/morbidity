@@ -9,6 +9,5 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:background">#191919</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:windowContentOverlay">@null</item>
     </style>
 </resources>

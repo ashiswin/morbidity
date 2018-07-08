@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -38,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
 
-        try {
+        /*try {
             birthday = Constants.BIRTHDAY_FORMAT.parse(preferences.getString(Constants.PREF_BIRTHDAY, ""));
             Log.d(TAG, birthday.getMonth() + "");
         } catch (ParseException e) {
@@ -53,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         txtDays = findViewById(R.id.txtDays);
         txtHours = findViewById(R.id.txtHours);
         txtMinutes = findViewById(R.id.txtMinutes);
-        txtSeconds = findViewById(R.id.txtSeconds);
+        txtSeconds = findViewById(R.id.txtSeconds);*/
 
         timer = new Timer();
         /*timer.scheduleAtFixedRate(new TimerTask() {

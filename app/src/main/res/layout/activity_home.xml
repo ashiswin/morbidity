@@ -1,101 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity"
-    android:orientation="vertical">
+    tools:context=".HomeActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00"
-        android:textSize="96sp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorPrimaryDark"
-        android:id="@+id/txtDays"/>
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:background="#FFFFFF"
+        android:text="Placeholder"
+        android:textColor="#000000"
+        android:id="@+id/txtPlaceholder"
+        android:layout_marginTop="48dp"
+        android:layout_centerHorizontal="true"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Days"
-        android:textSize="18sp"
-        android:layout_gravity="center_horizontal"/>
-    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txtTimeLeft"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-thin"
+        android:layout_below="@+id/txtPlaceholder"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="UNTIL THE END"
+        android:id="@+id/txtTheEnd"
+        android:textAllCaps="true"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-thin"
+        android:textColor="#95989A"
+        android:layout_below="@+id/txtTimeLeft"/>
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textSize="72sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/txtHours"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hours"
-                android:textSize="14sp"
-                android:layout_gravity="center_horizontal"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="72sp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorPrimaryDark"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textSize="72sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/txtMinutes"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Minutes"
-                android:textSize="14sp"
-                android:layout_gravity="center_horizontal"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textSize="72sp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorPrimaryDark"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textSize="72sp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorPrimaryDark"
-                android:id="@+id/txtSeconds"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Seconds"
-                android:textSize="14sp"
-                android:layout_gravity="center_horizontal"/>
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:id="@+id/txtMessage"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-thin"
+        android:text="God limits our days to make each one more precious"
+        android:layout_margin="48dp"/>
+</RelativeLayout>
