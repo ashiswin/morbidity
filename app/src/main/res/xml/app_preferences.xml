@@ -3,27 +3,41 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.preference.EditTextPreference
-        android:key="Name"
+        android:key="name"
         android:title="Name"
-        android:summary="Your preferred name"
+        android:icon="@drawable/preference_name"
         android:dialogMessage="Dialog Message"
         android:defaultValue="Default value" />
 
-    <android.support.v7.preference.PreferenceCategory
-        android:title="Category 1">
+    <com.ashiswin.morbidity.DatePreference
+        android:key="birthday"
+        android:title="Birthday" />
 
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="key1"
-            android:title="Switch Preference"
-            android:summary="Switch Summary"
-            android:defaultValue="true" />
+    <android.support.v7.preference.ListPreference
+        android:key="sex"
+        android:title="Sex"
+        android:entries="@array/sexes"
+        android:entryValues="@array/sexes"
+        android:summary="%s"/>
 
+    <android.support.v7.preference.ListPreference
+        android:key="diet"
+        android:title="Diet"
+        android:entries="@array/diets"
+        android:entryValues="@array/diets"
+        android:summary="%s"/>
 
-        <android.support.v7.preference.CheckBoxPreference
-            android:key="key3"
-            android:title="CheckBox Preference"
-            android:summary="CheckBox Summary"
-            android:defaultValue="true"/>
-    </android.support.v7.preference.PreferenceCategory>
+    <android.support.v7.preference.ListPreference
+        android:key="workout"
+        android:title="Workout"
+        android:entries="@array/workouts"
+        android:entryValues="@array/workouts"
+        android:summary="%s"/>
 
+    <android.support.v7.preference.ListPreference
+        android:key="notification"
+        android:title="Notification"
+        android:entries="@array/notification"
+        android:entryValues="@array/notification"
+        android:summary="%s"/>
 </android.support.v7.preference.PreferenceScreen>

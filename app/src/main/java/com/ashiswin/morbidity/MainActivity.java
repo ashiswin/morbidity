@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        // TODO: PASSTHRU FOR DEBUG
+        Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(homeIntent);
+        finish();
     }
 
 }

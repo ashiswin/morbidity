@@ -2,9 +2,9 @@ package com.ashiswin.morbidity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +16,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -35,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        getSupportActionBar().setElevation(0);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
 
@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
         txtSeconds = findViewById(R.id.txtSeconds);
 
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        /*timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 c = Calendar.getInstance();
@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
             }
-        }, 0, 1000);
+        }, 0, 1000);*/
     }
 
     @Override

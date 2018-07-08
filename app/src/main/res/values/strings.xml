@@ -7,6 +7,22 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string-array name="diets">
+        <item>Poor</item>
+        <item>Average</item>
+        <item>Exemplary</item>
+    </string-array>
+    <string-array name="workouts">
+        <item>Non-existent</item>
+        <item>Minimal</item>
+        <item>Moderate</item>
+        <item>Intense</item>
+    </string-array>
+    <string-array name="notification">
+        <item>Permanent</item>
+        <item>Daily</item>
+        <item>None</item>
+    </string-array>
     <string-array name="months">
         <item>January</item>
         <item>February</item>
@@ -264,7 +280,4 @@
         <item>Zambia</item>
         <item>Zimbabwe</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
