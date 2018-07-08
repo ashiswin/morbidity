@@ -29,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
     int sexIndex;
 
     TextView txtDays, txtHours, txtMinutes, txtSeconds;
+    TextView txtTimeLeft;
+
     Calendar c;
     Timer timer;
     @Override
@@ -39,25 +41,22 @@ public class HomeActivity extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
 
-        /*try {
+        try {
             birthday = Constants.BIRTHDAY_FORMAT.parse(preferences.getString(Constants.PREF_BIRTHDAY, ""));
             Log.d(TAG, birthday.getMonth() + "");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+        txtTimeLeft = findViewById(R.id.txtTimeLeft);
+
         sex = preferences.getString(Constants.PREF_SEX, "");
         country = preferences.getString(Constants.PREF_COUNTRY, "");
 
         sexIndex = (sex.equals("male")) ? 0 : 1;
 
-        txtDays = findViewById(R.id.txtDays);
-        txtHours = findViewById(R.id.txtHours);
-        txtMinutes = findViewById(R.id.txtMinutes);
-        txtSeconds = findViewById(R.id.txtSeconds);*/
-
         timer = new Timer();
-        /*timer.scheduleAtFixedRate(new TimerTask() {
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 c = Calendar.getInstance();
@@ -74,17 +73,15 @@ public class HomeActivity extends AppCompatActivity {
 
                 final long seconds = difference;
 
+                final String timeLeft = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        txtDays.setText(days + "");
-                        txtHours.setText(hours + "");
-                        txtMinutes.setText(minutes + "");
-                        txtSeconds.setText(seconds + "");
+                        txtTimeLeft.setText(timeLeft);
                     }
                 });
             }
-        }, 0, 1000);*/
+        }, 0, 1000);
     }
 
     @Override
