@@ -18,6 +18,7 @@
         android:title="Sex"
         android:entries="@array/sexes"
         android:entryValues="@array/sexes"
+        android:icon="@drawable/sex"
         android:summary="%s"/>
 
     <android.support.v7.preference.ListPreference
@@ -25,6 +26,7 @@
         android:title="Diet"
         android:entries="@array/diets"
         android:entryValues="@array/diets"
+        android:icon="@drawable/diet"
         android:summary="%s"/>
 
     <android.support.v7.preference.ListPreference
@@ -32,6 +34,7 @@
         android:title="Workout"
         android:entries="@array/workouts"
         android:entryValues="@array/workouts"
+        android:icon="@drawable/workout"
         android:summary="%s"/>
 
     <android.support.v7.preference.ListPreference
@@ -39,5 +42,6 @@
         android:title="Notification"
         android:entries="@array/notification"
         android:entryValues="@array/notification"
+        android:icon="@drawable/notification"
         android:summary="%s"/>
 </android.support.v7.preference.PreferenceScreen>
