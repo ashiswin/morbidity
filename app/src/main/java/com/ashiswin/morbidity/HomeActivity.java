@@ -1,13 +1,18 @@
 package com.ashiswin.morbidity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
@@ -82,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 final long seconds = difference;
 
-                final String timeLeft = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+                final String timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -93,6 +98,27 @@ public class HomeActivity extends AppCompatActivity {
                 });
             }
         }, 0, 1000);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "MorbidityChannel")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Morbidity")
+                .setContentText("Sup")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Morbidity Channel";
+            String description = "Morbidity's Channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(0, mBuilder.build());
     }
 
     @Override
