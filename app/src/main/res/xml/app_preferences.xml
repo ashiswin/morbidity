@@ -6,8 +6,7 @@
         android:key="name"
         android:title="Name"
         android:icon="@drawable/preference_name"
-        android:dialogMessage="Dialog Message"
-        android:defaultValue="Default value" />
+        android:dialogMessage="Dialog Message" />
 
     <com.ashiswin.morbidity.DatePreference
         android:key="birthday"

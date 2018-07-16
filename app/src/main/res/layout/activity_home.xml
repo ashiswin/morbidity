@@ -6,16 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="240dp"
         android:layout_height="240dp"
-        android:background="#FFFFFF"
-        android:text="Placeholder"
-        android:textColor="#000000"
-        android:id="@+id/txtPlaceholder"
         android:layout_marginTop="48dp"
         android:layout_centerHorizontal="true"
-        />
+        android:id="@+id/lytTimeLeft">
+        <com.jackandphantom.circularprogressbar.CircleProgressbar
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:id="@+id/prgTimeLeft"
+            app:cpb_roundedCorner="true"
+            app:cpb_foregroundProgressWidth="15"
+            app:cpb_foregroundProgressColor="#1864c2"
+            app:cpb_touchEnabled="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/txtPercentage"
+            android:textSize="60sp"/>
+    </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +35,7 @@
         android:id="@+id/txtTimeLeft"
         android:textSize="20sp"
         android:fontFamily="sans-serif-thin"
-        android:layout_below="@+id/txtPlaceholder"
+        android:layout_below="@+id/lytTimeLeft"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"/>
     <TextView

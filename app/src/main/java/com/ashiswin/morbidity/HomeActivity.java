@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.utils.Constants;
+import com.jackandphantom.circularprogressbar.CircleProgressbar;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import java.util.TimerTask;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
+    private static final int INTENT_SETTINGS = 0;
 
     SharedPreferences preferences;
 
@@ -38,7 +40,8 @@ public class HomeActivity extends AppCompatActivity {
     String country;
     int sexIndex;
 
-    TextView txtTimeLeft;
+    TextView txtTimeLeft, txtPercentage;
+    CircleProgressbar prgTimeLeft;
 
     Calendar c;
     Timer timer;
@@ -50,22 +53,13 @@ public class HomeActivity extends AppCompatActivity {
         centerTitle();
         getSupportActionBar().setTitle("TIMER");
 
-
         preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
 
-        try {
-            birthday = Constants.BIRTHDAY_FORMAT.parse(preferences.getString(Constants.PREF_BIRTHDAY, ""));
-            Log.d(TAG, birthday.getMonth() + "");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        loadPreferences();
 
         txtTimeLeft = findViewById(R.id.txtTimeLeft);
-
-        sex = preferences.getString(Constants.PREF_SEX, "");
-        country = preferences.getString(Constants.PREF_COUNTRY, "");
-
-        sexIndex = (sex.equals("male")) ? 0 : 1;
+        txtPercentage = findViewById(R.id.txtPercentage);
+        prgTimeLeft = findViewById(R.id.prgTimeLeft);
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -75,6 +69,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 c = Calendar.getInstance();
                 long difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
+                final long percentage = 100 - (difference * 100 / (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L));
 
                 final long days = difference / (24L * 60L * 60L);
                 difference = difference % (24 * 60 * 60);
@@ -92,6 +87,8 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         txtTimeLeft.setText(timeLeft);
+                        txtPercentage.setText(percentage + "%");
+                        prgTimeLeft.setProgress(percentage);
                     }
                 });
             }
@@ -116,7 +113,7 @@ public class HomeActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.settings:
                 Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
-                startActivity(settingsIntent);
+                startActivityForResult(settingsIntent, INTENT_SETTINGS);
             case R.id.bucket:
                 //add the function to perform here
                 return(true);
@@ -125,6 +122,26 @@ public class HomeActivity extends AppCompatActivity {
         return(super.onOptionsItemSelected(item));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == INTENT_SETTINGS) {
+            loadPreferences();
+        }
+    }
+
+    private void loadPreferences() {
+        try {
+            birthday = Constants.BIRTHDAY_FORMAT.parse(preferences.getString(Constants.PREF_BIRTHDAY, ""));
+            Log.d(TAG, birthday.getMonth() + "");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sex = preferences.getString(Constants.PREF_SEX, "");
+        country = preferences.getString(Constants.PREF_COUNTRY, "");
+        sexIndex = (sex.equals("male")) ? 0 : 1;
+    }
 
     private void centerTitle() {
         ArrayList<View> textViews = new ArrayList<>();
