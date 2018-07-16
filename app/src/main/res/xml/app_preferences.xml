@@ -18,6 +18,7 @@
         android:entries="@array/sexes"
         android:entryValues="@array/sexes"
         android:icon="@drawable/sex"
+        android:defaultValue="Male"
         android:summary="%s"/>
 
     <android.support.v7.preference.ListPreference

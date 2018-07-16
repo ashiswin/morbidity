@@ -140,7 +140,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         sex = preferences.getString(Constants.PREF_SEX, "");
         country = preferences.getString(Constants.PREF_COUNTRY, "");
-        sexIndex = (sex.equals("male")) ? 0 : 1;
+        sexIndex = (sex.equals("Male")) ? 0 : 1;
     }
 
     private void centerTitle() {
