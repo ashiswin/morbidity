@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
                 minutes = difference / 60;
                 difference = difference % 60;
 
-                final long seconds = difference;
+                seconds = difference;
 
                 final String timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
                 runOnUiThread(new Runnable() {

@@ -1,4 +1,8 @@
 <resources>
+    <string name="default_quote">God limits our days to make each one more precious</string>
+    <string name="default_caption">until the end</string>
+    <string name="default_percentage">0%</string>
+    <string name="default_date">0d 0h 0m 0s</string>
     <string name="app_name">Morbidity</string>
     <string name="strBtnBirthday">Set Birthday...</string>
     <string name="strBirthday">%1$d %2$s %3$d</string>

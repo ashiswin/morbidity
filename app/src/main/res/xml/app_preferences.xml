@@ -10,7 +10,8 @@
 
     <com.ashiswin.morbidity.DatePreference
         android:key="birthday"
-        android:title="Birthday" />
+        android:title="Birthday"
+        android:icon="@drawable/cake"/>
 
     <android.support.v7.preference.ListPreference
         android:key="sex"

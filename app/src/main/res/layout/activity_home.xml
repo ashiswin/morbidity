@@ -31,16 +31,19 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:id="@+id/txtPercentage"
-            android:textSize="60sp"/>
+            android:text="@string/default_percentage"
+            android:fontFamily="@font/oswald_regular"
+            android:textSize="@dimen/percent_size"/>
 
     </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:text="@string/default_date"
         android:id="@+id/txtTimeLeft"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-thin"
+        android:textSize="@dimen/date_size"
+        android:fontFamily="@font/roboto"
         android:layout_below="@+id/lytTimeLeft"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"/>
@@ -48,11 +51,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="UNTIL THE END"
+        android:text="@string/default_caption"
         android:id="@+id/txtTheEnd"
         android:textAllCaps="true"
-        android:textSize="12sp"
-        android:fontFamily="sans-serif-thin"
+        android:textSize="@dimen/caption_size"
+        android:fontFamily="@font/roboto"
         android:textColor="#95989A"
         android:layout_below="@+id/txtTimeLeft"/>
     <TextView
@@ -61,8 +64,8 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:id="@+id/txtMessage"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif-thin"
-        android:text="God limits our days to make each one more precious"
+        android:textSize="@dimen/quote_size"
+        android:fontFamily="@font/roboto"
+        android:text="@string/default_quote"
         android:layout_margin="48dp"/>
 </RelativeLayout>
