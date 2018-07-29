@@ -7,20 +7,24 @@
     tools:context=".HomeActivity">
 
     <RelativeLayout
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_marginTop="48dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/lytTimeLeft">
-        <com.jackandphantom.circularprogressbar.CircleProgressbar
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:id="@+id/prgTimeLeft"
-            app:cpb_roundedCorner="true"
-            app:cpb_foregroundProgressWidth="15"
-            app:cpb_foregroundProgressColor="#FF4422"
-            app:cpb_backgroundProgressColor="@color/colorPrimaryDark"
-            app:cpb_touchEnabled="true"
+
+        <com.dinuscxj.progressbar.CircleProgressBar
+            android:id="@+id/line_progress"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:style="solid_line"
+            app:progress_stroke_cap="round"
+            app:progress_stroke_width="6dp"
+            app:progress_start_color="@color/primaryRed"
+            app:progress_end_color="@color/accentYellow"
+            app:progress_background_color="@color/backgroundBlack"
+            app:progress_shader="sweep"
+            app:progress_text_size="0dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -28,6 +32,7 @@
             android:layout_centerInParent="true"
             android:id="@+id/txtPercentage"
             android:textSize="60sp"/>
+
     </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"

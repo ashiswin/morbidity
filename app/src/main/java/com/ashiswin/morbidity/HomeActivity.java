@@ -1,16 +1,14 @@
 package com.ashiswin.morbidity;
 
+import android.animation.ValueAnimator;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.utils.Constants;
-import com.jackandphantom.circularprogressbar.CircleProgressbar;
+import com.dinuscxj.progressbar.CircleProgressBar;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -44,9 +42,15 @@ public class HomeActivity extends AppCompatActivity {
     String sex;
     String country;
     int sexIndex;
+    long percentage = 0;
+    long days = 0;
+    long hours = 0;
+    long minutes = 0;
+    long seconds = 0;
+    long difference = 0;
 
     TextView txtTimeLeft, txtPercentage;
-    CircleProgressbar prgTimeLeft;
+    CircleProgressBar lineProgress;
 
     Calendar c;
     Timer timer;
@@ -64,7 +68,9 @@ public class HomeActivity extends AppCompatActivity {
 
         txtTimeLeft = findViewById(R.id.txtTimeLeft);
         txtPercentage = findViewById(R.id.txtPercentage);
-        prgTimeLeft = findViewById(R.id.prgTimeLeft);
+        lineProgress = findViewById(R.id.line_progress);
+
+        lineProgress.setProgressFormatter(new MyProgressFormatter());
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -73,16 +79,16 @@ public class HomeActivity extends AppCompatActivity {
                 if(birthday == null) return;
 
                 c = Calendar.getInstance();
-                long difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
-                final long percentage = 100 - (difference * 100 / (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L));
+                difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
+                percentage = 100 - (difference * 100 / (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L));
 
-                final long days = difference / (24L * 60L * 60L);
+                days = difference / (24L * 60L * 60L);
                 difference = difference % (24 * 60 * 60);
 
-                final long hours = difference / (60 * 60);
+                hours = difference / (60 * 60);
                 difference = difference % (60 * 60);
 
-                final long minutes = difference / 60;
+                minutes = difference / 60;
                 difference = difference % 60;
 
                 final long seconds = difference;
@@ -93,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void run() {
                         txtTimeLeft.setText(timeLeft);
                         txtPercentage.setText(percentage + "%");
-                        prgTimeLeft.setProgress(percentage);
+                        lineProgress.setProgress(Math.round(percentage));
                     }
                 });
             }
@@ -122,9 +128,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (percentage != 0) {
+            simulateProgress(Math.round(percentage));
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-
         timer.cancel();
     }
 
@@ -196,5 +209,27 @@ public class HomeActivity extends AppCompatActivity {
                 appCompatTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             }
         }
+    }
+
+    private void simulateProgress(int progress) {
+        ValueAnimator animator = ValueAnimator.ofInt(0, progress);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int progress = (int) animation.getAnimatedValue();
+                lineProgress.setProgress(progress);
+            }
+        });
+        animator.setDuration(1000);
+        animator.start();
+    }
+}
+
+final class MyProgressFormatter implements CircleProgressBar.ProgressFormatter {
+    private static final String DEFAULT_PATTERN = "%d%%";
+
+    @Override
+    public CharSequence format(int progress, int max) {
+        return String.format(DEFAULT_PATTERN, (int) ((float) progress / (float) max * 100));
     }
 }
