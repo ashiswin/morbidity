@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/widget_motivational_quote"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_quote"
+        android:textColor="@color/textWhite"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_thin"
+        android:textSize="@dimen/widget_quote_size" />
+
+    <TextView
+        android:id="@+id/widget_motivational_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/widget_motivational_quote"
+        android:text="@string/default_author"
+        android:textColor="@color/textWhite"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_thin"
+        android:textSize="@dimen/widget_author_size"/>
+
+</RelativeLayout>

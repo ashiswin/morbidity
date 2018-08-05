@@ -5,4 +5,7 @@
     <dimen name="date_size">20sp</dimen>
     <dimen name="caption_size">12sp</dimen>
     <dimen name="quote_size">16sp</dimen>
+
+    <dimen name="widget_quote_size">20sp</dimen>
+    <dimen name="widget_author_size">16sp</dimen>
 </resources>
