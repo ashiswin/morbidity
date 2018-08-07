@@ -28,16 +28,17 @@ public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_motivational_quote);
         final RequestQueue queue = Volley.newRequestQueue(context);
         final String url ="https://quotes.rest/qod";
-        final String default_quote = Resources.getSystem().getString(R.string.default_quote);
-        final String default_author = Resources.getSystem().getString(R.string.default_author);
+
+        final String default_quote = context.getString(R.string.default_quote);
+        final String default_author = context.getString(R.string.default_author);
 
         // Perform this loop procedure for each App Widget that belongs to this provider
         for (int i=0; i<N; i++) {
             final int appWidgetId = appWidgetIds[i];
 
             // Request a json response from the provided URL.
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
