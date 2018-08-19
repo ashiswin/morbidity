@@ -45,7 +45,7 @@ public class BucketListActivity extends AppCompatActivity implements OnStartDrag
         lstBucketList.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(lstBucketList.getContext(), layoutManager.getOrientation());
         lstBucketList.addItemDecoration(dividerItemDecoration);
-        
+
         final BucketListAdapter adapter = new BucketListAdapter(BucketListActivity.this, BucketListActivity.this);
         lstBucketList.setAdapter(adapter);
 

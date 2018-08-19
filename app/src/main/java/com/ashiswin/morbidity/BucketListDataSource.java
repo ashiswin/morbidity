@@ -23,11 +23,14 @@ public class BucketListDataSource {
     private static final String FILENAME = "bucketlist.txt";
 
     private List<String> bucketList;
+    private List<Boolean> checked;
+
     private Context context;
 
     public BucketListDataSource(Context context) {
         this.context = context;
         this.bucketList = new ArrayList<>();
+        this.checked = new ArrayList<>();
 
         try {
             FileInputStream fis = context.openFileInput(FILENAME);
@@ -36,7 +39,10 @@ public class BucketListDataSource {
             String line;
             while((line = br.readLine()) != null) {
                 if(line.equals("")) continue;
-                bucketList.add(line);
+                Log.d("BLDS", line);
+                String[] arr = line.split(" ");
+                bucketList.add(arr[0]);
+                checked.add(Boolean.parseBoolean(arr[1]));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,16 +53,26 @@ public class BucketListDataSource {
         return bucketList;
     }
 
-    public void saveBucketList(List<String> bucketList) {
+    public List<Boolean> getChecked() {
+        return checked;
+    }
+
+    public void saveBucketList(List<String> bucketList, List<Boolean> checked) {
+        Log.d("BLDS", checked.toString());
         try {
             FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
-            for(String item : bucketList) {
-                bw.write(item + "\n");
+            for(int i = 0; i < bucketList.size(); i++) {
+                String item = bucketList.get(i);
+                Boolean check = checked.get(i);
+                bw.write(item + " " + check.toString() + "\n");
+                Log.d("BLDS", item + " " + check.toString());
             }
 
             this.bucketList = bucketList;
+            this.checked = checked;
+
             bw.flush();
         } catch(IOException e) {
             e.printStackTrace();
