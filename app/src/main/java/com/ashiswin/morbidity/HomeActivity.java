@@ -1,25 +1,33 @@
 package com.ashiswin.morbidity;
 
 import android.animation.ValueAnimator;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.utils.Constants;
@@ -60,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getSupportActionBar().setElevation(0);
         centerTitle();
-        getSupportActionBar().setTitle("TIMER");
+        getSupportActionBar().setTitle("Timer");
 
         preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
 
@@ -153,9 +161,11 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.settings:
                 Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
                 startActivityForResult(settingsIntent, INTENT_SETTINGS);
+                return true;
             case R.id.bucket:
-                //add the function to perform here
-                return(true);
+                Intent bucketListIntent = new Intent(HomeActivity.this, BucketListActivity.class);
+                startActivity(bucketListIntent);
+                return true;
         }
 
         return(super.onOptionsItemSelected(item));
@@ -222,6 +232,35 @@ public class HomeActivity extends AppCompatActivity {
         });
         animator.setDuration(1000);
         animator.start();
+    }
+
+    private void showMyDialog(Context context) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_bucket_list);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(true);
+
+        RecyclerView lstBucketList = dialog.findViewById(R.id.lstBucketList);
+        FloatingActionButton btnClose = dialog.findViewById(R.id.btnAdd);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        /**
+         * if you want the dialog to be specific size, do the following
+         * this will cover 85% of the screen (85% width and 85% height)
+         */
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int dialogWidth = (int)(displayMetrics.widthPixels * 0.85);
+        int dialogHeight = (int)(displayMetrics.heightPixels * 0.85);
+        dialog.getWindow().setLayout(dialogWidth, dialogHeight);
+
+        dialog.show();
     }
 }
 

@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         getSupportActionBar().setElevation(0);
         centerTitle();
-        getSupportActionBar().setTitle("SETTINGS");
+        getSupportActionBar().setTitle("Settings");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
