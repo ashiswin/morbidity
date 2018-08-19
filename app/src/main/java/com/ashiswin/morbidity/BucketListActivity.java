@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -39,8 +40,12 @@ public class BucketListActivity extends AppCompatActivity implements OnStartDrag
         btnAdd = findViewById(R.id.btnAdd);
 
         lstBucketList.setHasFixedSize(true);
-        lstBucketList.setLayoutManager(new LinearLayoutManager(BucketListActivity.this));
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(BucketListActivity.this);
+        lstBucketList.setLayoutManager(layoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(lstBucketList.getContext(), layoutManager.getOrientation());
+        lstBucketList.addItemDecoration(dividerItemDecoration);
+        
         final BucketListAdapter adapter = new BucketListAdapter(BucketListActivity.this, BucketListActivity.this);
         lstBucketList.setAdapter(adapter);
 

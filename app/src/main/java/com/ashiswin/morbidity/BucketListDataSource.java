@@ -35,14 +35,11 @@ public class BucketListDataSource {
 
             String line;
             while((line = br.readLine()) != null) {
-                Log.d("BLDS-LOOP", line);
                 if(line.equals("")) continue;
                 bucketList.add(line);
             }
-            Log.d("BLDS", "SUCCESS " + bucketList.toString());
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("BLDS", "FAIL");
         }
     }
 
@@ -55,17 +52,14 @@ public class BucketListDataSource {
             FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
-            for(String l : bucketList) {
-                bw.write(l + "\n");
-                Log.d("BLDS-LOOP 2", l);
+            for(String item : bucketList) {
+                bw.write(item + "\n");
             }
 
             this.bucketList = bucketList;
             bw.flush();
-            Log.d("BLDS", "SUCCESS " + bucketList.toString());
         } catch(IOException e) {
             e.printStackTrace();
-            Log.d("BLDS", "Fail");
         }
     }
 }
