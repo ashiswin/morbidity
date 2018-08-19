@@ -1,6 +1,9 @@
 package com.ashiswin.morbidity;
 
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
@@ -9,14 +12,18 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
 public class BucketListActivity extends AppCompatActivity implements OnStartDragListener {
     RecyclerView lstBucketList;
+    FloatingActionButton btnAdd;
+
     ItemTouchHelper helper;
 
     @Override
@@ -29,15 +36,49 @@ public class BucketListActivity extends AppCompatActivity implements OnStartDrag
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         lstBucketList = findViewById(R.id.lstBucketList);
+        btnAdd = findViewById(R.id.btnAdd);
+
         lstBucketList.setHasFixedSize(true);
         lstBucketList.setLayoutManager(new LinearLayoutManager(BucketListActivity.this));
 
-        BucketListAdapter adapter = new BucketListAdapter(BucketListActivity.this);
+        final BucketListAdapter adapter = new BucketListAdapter(BucketListActivity.this, BucketListActivity.this);
         lstBucketList.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new BucketListTouchHelperCallback(adapter);
         helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(lstBucketList);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(BucketListActivity.this);
+                View promptsView = li.inflate(R.layout.dialog_add_bucket_list, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BucketListActivity.this);
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = promptsView.findViewById(R.id.edtItemName);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        adapter.addItem(userInput.getText().toString());
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+            }
+        });
     }
 
     @Override

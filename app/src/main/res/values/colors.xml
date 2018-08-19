@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4433</color>
     <color name="backgroundBlack">#000000</color>
     <color name="backgroundGrey">#191919</color>
+    <color name="backgroundLightGrey">#333333</color>
     <color name="primaryRed">#FF4433</color>
     <color name="accentYellow">#FEB247</color>
     <color name="textWhite">#FFFFFF</color>

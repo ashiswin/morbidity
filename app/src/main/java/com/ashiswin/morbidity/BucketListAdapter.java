@@ -1,5 +1,6 @@
 package com.ashiswin.morbidity;
 
+import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -18,17 +19,15 @@ import java.util.List;
  */
 
 public class BucketListAdapter extends RecyclerView.Adapter<BucketListViewHolder> implements ItemTouchHelperAdapter {
-
-    private static final String[] STRINGS = new String[]{
-            "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
-    };
+    private final BucketListDataSource dataSource;
     private final OnStartDragListener mDragStartListener;
 
-    private final List<String> mItems = new ArrayList<>();
+    private final List<String> mItems;
 
-    public BucketListAdapter(OnStartDragListener dragStartListener) {
-        mItems.addAll(Arrays.asList(STRINGS));
+    public BucketListAdapter(OnStartDragListener dragStartListener, Context context) {
         mDragStartListener = dragStartListener;
+        dataSource = new BucketListDataSource(context);
+        mItems = dataSource.getBucketList();
     }
 
     @Override
@@ -62,6 +61,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListViewHolder
     public void onItemDismiss(int position) {
         mItems.remove(position);
         notifyItemRemoved(position);
+        dataSource.saveBucketList(mItems);
     }
 
     @Override
@@ -76,6 +76,13 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListViewHolder
             }
         }
         notifyItemMoved(fromPosition, toPosition);
+        dataSource.saveBucketList(mItems);
         return true;
+    }
+
+    public void addItem(String listItem) {
+        mItems.add(listItem);
+        notifyDataSetChanged();
+        dataSource.saveBucketList(mItems);
     }
 }
