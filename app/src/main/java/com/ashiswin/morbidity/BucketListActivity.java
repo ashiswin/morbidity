@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -31,10 +32,7 @@ public class BucketListActivity extends AppCompatActivity implements OnStartDrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bucket_list);
-        getSupportActionBar().setElevation(0);
-        centerTitle();
-        getSupportActionBar().setTitle("Bucket List");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         lstBucketList = findViewById(R.id.lstBucketList);
         btnAdd = findViewById(R.id.btnAdd);
@@ -94,6 +92,15 @@ public class BucketListActivity extends AppCompatActivity implements OnStartDrag
         }
 
         return(super.onOptionsItemSelected(item));
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView title = findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        title.setText("Bucket List");
     }
 
     private void centerTitle() {
