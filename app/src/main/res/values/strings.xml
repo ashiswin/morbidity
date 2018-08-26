@@ -5,6 +5,9 @@
     <string name="default_date">0d 0h 0m 0s</string>
     <string name="default_author">Mitch Albom</string>
     <string name="app_name">Morbidity</string>
+    <string name="timer_title">Timer</string>
+    <string name="settings_title">Settings</string>
+    <string name="bucket_title">Bucket List</string>
     <string name="strBtnBirthday">Set Birthday...</string>
     <string name="strBirthday">%1$d %2$s %3$d</string>
     <string name="strBtnDone">Done</string>

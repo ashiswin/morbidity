@@ -1,17 +1,11 @@
 package com.ashiswin.morbidity;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
     @Override
@@ -34,6 +28,9 @@ public class SettingsActivity extends AppCompatActivity {
         return(super.onOptionsItemSelected(item));
     }
 
+    /**
+     * Set toolbar parameters in this method
+     */
     private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView title = findViewById(R.id.toolbar_title);
@@ -41,6 +38,6 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        title.setText("Settings");
+        title.setText(R.string.settings_title);
     }
 }
