@@ -18,12 +18,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        //getSupportActionBar().setElevation(0);
-        //centerTitle();
-        //getSupportActionBar().setTitle("Settings");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.pref_content, new PreferencesFragment())
                 .commit();
