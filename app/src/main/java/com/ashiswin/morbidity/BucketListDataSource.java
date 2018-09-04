@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class BucketListDataSource {
                 if(line.equals("")) continue;
                 Log.d("BLDS", line);
                 String[] arr = line.split(" ");
-                bucketList.add(arr[0]);
+                bucketList.add(new String(Base64.getDecoder().decode(arr[0])));
                 checked.add(Boolean.parseBoolean(arr[1]));
             }
         } catch (IOException e) {
@@ -64,7 +65,7 @@ public class BucketListDataSource {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
             for(int i = 0; i < bucketList.size(); i++) {
-                String item = bucketList.get(i);
+                String item = Base64.getEncoder().encodeToString(bucketList.get(i).getBytes());
                 Boolean check = checked.get(i);
                 bw.write(item + " " + check.toString() + "\n");
                 Log.d("BLDS", item + " " + check.toString());
