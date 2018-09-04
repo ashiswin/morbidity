@@ -6,11 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
+    <include layout="@layout/toolbar_default"
+        android:id="@+id/home_toolbar_layout"/>
+
     <RelativeLayout
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginTop="48dp"
         android:layout_centerHorizontal="true"
+        android:layout_below="@+id/home_toolbar_layout"
         android:id="@+id/lytTimeLeft">
 
         <com.dinuscxj.progressbar.CircleProgressBar

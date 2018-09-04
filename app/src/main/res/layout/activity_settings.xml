@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.ashiswin.morbidity.SettingsActivity">
 
+    <include layout="@layout/toolbar_default"
+        android:id="@+id/settings_toolbar"/>
+
+    <FrameLayout
+        android:id="@+id/pref_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/settings_toolbar"/>
+
 </android.support.constraint.ConstraintLayout>

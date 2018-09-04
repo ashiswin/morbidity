@@ -7,7 +7,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,26 +14,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.utils.Constants;
 import com.dinuscxj.progressbar.CircleProgressBar;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -66,9 +59,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        getSupportActionBar().setElevation(0);
-        centerTitle();
-        getSupportActionBar().setTitle("Timer");
+        setToolbar();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
 
@@ -80,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
 
         lineProgress.setProgressFormatter(new MyProgressFormatter());
 
+        // Update countdown clock every second
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -113,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }, 0, 1000);
 
+        // TODO: Do actual notifications
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "MorbidityChannel")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Morbidity")
@@ -139,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (percentage != 0) {
-            simulateProgress(Math.round(percentage));
+            animateProgress(Math.round(percentage));
         }
     }
 
@@ -192,36 +185,22 @@ public class HomeActivity extends AppCompatActivity {
         sexIndex = (sex.equals("Male")) ? 0 : 1;
     }
 
-    private void centerTitle() {
-        ArrayList<View> textViews = new ArrayList<>();
-
-        getWindow().getDecorView().findViewsWithText(textViews, getTitle(), View.FIND_VIEWS_WITH_TEXT);
-
-        if(textViews.size() > 0) {
-            AppCompatTextView appCompatTextView = null;
-            if(textViews.size() == 1) {
-                appCompatTextView = (AppCompatTextView) textViews.get(0);
-            } else {
-                for(View v : textViews) {
-                    if(v.getParent() instanceof Toolbar) {
-                        appCompatTextView = (AppCompatTextView) v;
-                        break;
-                    }
-                }
-            }
-
-            if(appCompatTextView != null) {
-                ViewGroup.LayoutParams params = appCompatTextView.getLayoutParams();
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                appCompatTextView.setLayoutParams(params);
-                appCompatTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                appCompatTextView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-                appCompatTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            }
-        }
+    /**
+     * Set toolbar parameters in this method
+     */
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView title = findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        title.setText(R.string.timer_title);
     }
 
-    private void simulateProgress(int progress) {
+    /**
+     * This method animates the progress circle
+     * @param progress Number between 0 to 100
+     */
+    private void animateProgress(int progress) {
         ValueAnimator animator = ValueAnimator.ofInt(0, progress);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -263,6 +242,7 @@ public class HomeActivity extends AppCompatActivity {
         dialog.show();
     }
 }
+
 
 final class MyProgressFormatter implements CircleProgressBar.ProgressFormatter {
     private static final String DEFAULT_PATTERN = "%d%%";

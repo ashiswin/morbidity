@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -31,10 +32,7 @@ public class BucketListActivity extends AppCompatActivity implements OnStartDrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bucket_list);
-        getSupportActionBar().setElevation(0);
-        centerTitle();
-        getSupportActionBar().setTitle("Bucket List");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         lstBucketList = findViewById(R.id.lstBucketList);
         btnAdd = findViewById(R.id.btnAdd);
@@ -96,33 +94,16 @@ public class BucketListActivity extends AppCompatActivity implements OnStartDrag
         return(super.onOptionsItemSelected(item));
     }
 
-    private void centerTitle() {
-        ArrayList<View> textViews = new ArrayList<>();
-
-        getWindow().getDecorView().findViewsWithText(textViews, getTitle(), View.FIND_VIEWS_WITH_TEXT);
-
-        if(textViews.size() > 0) {
-            AppCompatTextView appCompatTextView = null;
-            if(textViews.size() == 1) {
-                appCompatTextView = (AppCompatTextView) textViews.get(0);
-            } else {
-                for(View v : textViews) {
-                    if(v.getParent() instanceof Toolbar) {
-                        appCompatTextView = (AppCompatTextView) v;
-                        break;
-                    }
-                }
-            }
-
-            if(appCompatTextView != null) {
-                ViewGroup.LayoutParams params = appCompatTextView.getLayoutParams();
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                appCompatTextView.setLayoutParams(params);
-                appCompatTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                appCompatTextView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-                appCompatTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            }
-        }
+    /**
+     * Set toolbar parameters in this method
+     */
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView title = findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        title.setText(R.string.bucket_title);
     }
 
     @Override
