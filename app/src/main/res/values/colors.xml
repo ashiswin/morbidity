@@ -9,4 +9,5 @@
     <color name="primaryRed">#FF4433</color>
     <color name="accentYellow">#FEB247</color>
     <color name="textWhite">#FFFFFF</color>
+    <color name="textHint">#909090</color>
 </resources>

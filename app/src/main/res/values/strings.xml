@@ -5,6 +5,7 @@
     <string name="default_date">0d 0h 0m 0s</string>
     <string name="default_author">Mitch Albom</string>
     <string name="app_name">Morbidity</string>
+    <string name="get_started_title">Get Started</string>
     <string name="timer_title">Timer</string>
     <string name="settings_title">Settings</string>
     <string name="bucket_title">Bucket List</string>
@@ -288,4 +289,7 @@
         <item>Zambia</item>
         <item>Zimbabwe</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

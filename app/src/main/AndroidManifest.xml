@@ -14,13 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait" />
@@ -43,7 +37,15 @@
                 android:resource="@xml/motivational_widget_info" />
         </receiver>
 
-        <activity android:name=".BucketListActivity"></activity>
+        <activity android:name=".BucketListActivity" />
+        <activity android:name=".LaunchScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".GetStartedActivity"></activity>
     </application>
 
 </manifest>
