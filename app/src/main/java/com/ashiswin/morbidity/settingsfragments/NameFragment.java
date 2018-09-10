@@ -1,6 +1,8 @@
 package com.ashiswin.morbidity.settingsfragments;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -8,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -28,7 +31,7 @@ public class NameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_name, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_name, container, false);
 
         EditText edtName = rootView.findViewById(R.id.edtName);
         final Button btnNext = rootView.findViewById(R.id.btnNext);
@@ -59,8 +62,16 @@ public class NameFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetStartedActivity parent = (GetStartedActivity) getActivity();
-                parent.nextFragment(0);
+            Context context = rootView.getContext();
+
+            // Hide keyboard
+            InputMethodManager imm = (InputMethodManager)
+                    context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getView().getRootView().getWindowToken(), 0);
+
+            // Change fragment
+            GetStartedActivity parent = (GetStartedActivity) getActivity();
+            parent.nextFragment(0);
             }
         });
         return rootView;

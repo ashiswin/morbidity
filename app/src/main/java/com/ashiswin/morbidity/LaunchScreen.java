@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.ashiswin.morbidity.utils.LayoutUtils;
 
 public class LaunchScreen extends AppCompatActivity {
+    private static final int GET_STARTED_INTENT = 0;
+
     ImageView imgLogo;
     Button btnGetStarted;
     TextView txtTitle;
@@ -41,8 +43,19 @@ public class LaunchScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent getStartedIntent = new Intent(LaunchScreen.this, GetStartedActivity.class);
-                startActivity(getStartedIntent);
+                startActivityForResult(getStartedIntent, GET_STARTED_INTENT);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == GET_STARTED_INTENT && resultCode == RESULT_OK) {
+            Intent homeIntent = new Intent(LaunchScreen.this, HomeActivity.class);
+            startActivity(homeIntent);
+            finish();
+        }
     }
 }

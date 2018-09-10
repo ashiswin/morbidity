@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="192dp"
         android:layout_height="192dp"
-        android:src="@drawable/workout"
+        android:src="@drawable/workout_large"
         android:background="@color/backgroundLightGrey"
         android:layout_gravity="center_horizontal"/>
     <TextView

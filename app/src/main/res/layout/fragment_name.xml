@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="192dp"
         android:layout_height="192dp"
-        android:src="@drawable/preference_name"
+        android:src="@drawable/preference_name_large"
         android:background="@color/backgroundLightGrey"
         android:layout_gravity="center_horizontal"/>
     <TextView
