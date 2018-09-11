@@ -3,6 +3,7 @@ package com.ashiswin.morbidity.settingsfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,9 +58,8 @@ public class SexFragment extends Fragment implements SettingsFragmentInterface {
         txtSubtitle.setText("What is your sex " + name + "?");
     }
 
-    public Dictionary getData() {
-        Dictionary output = new Hashtable();
-        output.put(Constants.PREF_SEX, spnSex.getSelectedItem().toString());
-        return output;
+    @Override
+    public Pair<String, String> getSetting() {
+        return new Pair<>(Constants.PREF_SEX, spnSex.getSelectedItem().toString());
     }
 }

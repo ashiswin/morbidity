@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,12 +90,10 @@ public class BirthdayFragment extends Fragment implements SettingsFragmentInterf
         txtSubtitle.setText("When were you born " + name + "?");
     }
 
-    public Dictionary getData() {
+    @Override
+    public Pair<String, String> getSetting() {
         String date = Constants.BIRTHDAY_FORMAT.format(myCalendar.getTime());
-        Dictionary output = new Hashtable();
-        output.put(Constants.PREF_BIRTHDAY, date);
-
-        return output;
+        return new Pair<>(Constants.PREF_BIRTHDAY, date);
     }
 
     private void updateLabel() {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,10 +83,13 @@ public class NameFragment extends Fragment implements SettingsFragmentInterface{
         return rootView;
     }
 
-    public Dictionary getData() {
-        Dictionary output = new Hashtable();
-        output.put(Constants.PREF_NAME, edtName.getText().toString());
-        return output;
+    @Override
+    public Pair<String, String> getSetting() {
+        return new Pair<>(Constants.PREF_NAME, edtName.getText().toString());
     }
 
+    @Override
+    public void setName(String name) {
+        // Do nothing
+    }
 }

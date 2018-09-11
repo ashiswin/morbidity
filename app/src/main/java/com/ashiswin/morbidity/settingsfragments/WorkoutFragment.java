@@ -4,6 +4,7 @@ package com.ashiswin.morbidity.settingsfragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,9 +62,8 @@ public class WorkoutFragment extends Fragment implements SettingsFragmentInterfa
         txtSubtitle.setText("What are your workouts like " + name + "?");
     }
 
-    public Dictionary getData() {
-        Dictionary output = new Hashtable();
-        output.put(Constants.PREF_WORKOUT, spnWorkouts.getSelectedItem().toString());
-        return output;
+    @Override
+    public Pair<String, String> getSetting() {
+        return new Pair<>(Constants.PREF_WORKOUT, spnWorkouts.getSelectedItem().toString());
     }
 }

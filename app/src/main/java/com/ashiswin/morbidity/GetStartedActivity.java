@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.settingsfragments.BirthdayFragment;
@@ -76,10 +77,9 @@ public class GetStartedActivity extends AppCompatActivity {
 
         if(currentFragment == 0) {
             String name = ((NameFragment) adapter.fragments[0]).name;
-            ((BirthdayFragment) adapter.fragments[1]).setName(name);
-            ((SexFragment) adapter.fragments[2]).setName(name);
-            ((DietFragment) adapter.fragments[3]).setName(name);
-            ((WorkoutFragment) adapter.fragments[4]).setName(name);
+            for(Fragment f : adapter.fragments) {
+                ((SettingsFragmentInterface) f).setName(name);
+            }
         }
     }
 
@@ -92,12 +92,8 @@ public class GetStartedActivity extends AppCompatActivity {
     }
 
     public void savePreference(SettingsFragmentInterface fragment) {
-        Dictionary data = fragment.getData();
-        for (Enumeration k = data.keys(); k.hasMoreElements();) {
-            String key = k.nextElement().toString();
-            editor.putString(key, data.get(key).toString()).apply();
-            Log.d(TAG, data.get(key).toString());
-        }
+        Pair<String, String> data = fragment.getSetting();
+        editor.putString(data.first, data.second).apply();
     }
 
     private class PagerAdapter extends FragmentPagerAdapter {
