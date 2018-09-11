@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.ashiswin.morbidity.GetStartedActivity;
 import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.utils.Constants;
 
@@ -46,8 +48,10 @@ public class WorkoutFragment extends Fragment implements SettingsFragmentInterfa
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().setResult(Activity.RESULT_OK);
-                getActivity().finish();
+                GetStartedActivity activity = (GetStartedActivity) getActivity();
+                activity.savePreference(WorkoutFragment.this);
+                activity.setResult(Activity.RESULT_OK);
+                activity.finish();
             }
         });
 

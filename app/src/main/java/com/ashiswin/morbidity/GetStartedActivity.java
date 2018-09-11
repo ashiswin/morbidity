@@ -20,11 +20,10 @@ import com.ashiswin.morbidity.settingsfragments.SettingsFragmentInterface;
 import com.ashiswin.morbidity.settingsfragments.SexFragment;
 import com.ashiswin.morbidity.settingsfragments.WorkoutFragment;
 import com.ashiswin.morbidity.utils.LayoutUtils;
-import com.ashiswin.morbidity.utils.Constants;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.Set;
+
 
 public class GetStartedActivity extends AppCompatActivity {
     ViewPager pgrSettings;
@@ -58,12 +57,7 @@ public class GetStartedActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 SettingsFragmentInterface fragment = (SettingsFragmentInterface) adapter.fragments[position];
-                Dictionary data = fragment.getData();
-                for (Enumeration k = data.keys(); k.hasMoreElements();) {
-                    String key = k.nextElement().toString();
-                    editor.putString(key, data.get(key).toString()).apply();
-                    Log.d(TAG, data.get(key).toString());
-                }
+                savePreference(fragment);
             }
 
             @Override
@@ -95,6 +89,15 @@ public class GetStartedActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         title.setText(R.string.get_started_title);
+    }
+
+    public void savePreference(SettingsFragmentInterface fragment) {
+        Dictionary data = fragment.getData();
+        for (Enumeration k = data.keys(); k.hasMoreElements();) {
+            String key = k.nextElement().toString();
+            editor.putString(key, data.get(key).toString()).apply();
+            Log.d(TAG, data.get(key).toString());
+        }
     }
 
     private class PagerAdapter extends FragmentPagerAdapter {
