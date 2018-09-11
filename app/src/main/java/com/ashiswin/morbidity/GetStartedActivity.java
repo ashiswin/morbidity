@@ -1,5 +1,7 @@
 package com.ashiswin.morbidity;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,25 +10,39 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.settingsfragments.BirthdayFragment;
 import com.ashiswin.morbidity.settingsfragments.DietFragment;
 import com.ashiswin.morbidity.settingsfragments.NameFragment;
+import com.ashiswin.morbidity.settingsfragments.SettingsFragmentInterface;
 import com.ashiswin.morbidity.settingsfragments.SexFragment;
 import com.ashiswin.morbidity.settingsfragments.WorkoutFragment;
 import com.ashiswin.morbidity.utils.LayoutUtils;
+import com.ashiswin.morbidity.utils.Constants;
+
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Set;
 
 public class GetStartedActivity extends AppCompatActivity {
     ViewPager pgrSettings;
     TabLayout lytDots;
     PagerAdapter adapter;
+
+    String TAG = "GetStartedActivity";
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
         setToolbar();
+        preferences = PreferenceManager.getDefaultSharedPreferences(GetStartedActivity.this);
+        editor = preferences.edit();
 
         pgrSettings = findViewById(R.id.pgrSettings);
         lytDots = findViewById(R.id.lytDots);
@@ -37,6 +53,27 @@ public class GetStartedActivity extends AppCompatActivity {
         pgrSettings.setPageMargin(LayoutUtils.convertDip2Pixels(GetStartedActivity.this, 16));
         pgrSettings.setOffscreenPageLimit(3);
         lytDots.setupWithViewPager(pgrSettings);
+
+        pgrSettings.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                SettingsFragmentInterface fragment = (SettingsFragmentInterface) adapter.fragments[position];
+                Dictionary data = fragment.getData();
+                for (Enumeration k = data.keys(); k.hasMoreElements();) {
+                    String key = k.nextElement().toString();
+                    editor.putString(key, data.get(key).toString()).apply();
+                    Log.d(TAG, data.get(key).toString());
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     public void nextFragment(int currentFragment) {

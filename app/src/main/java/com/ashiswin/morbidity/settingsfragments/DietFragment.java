@@ -13,12 +13,18 @@ import android.widget.TextView;
 
 import com.ashiswin.morbidity.GetStartedActivity;
 import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.utils.Constants;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DietFragment extends Fragment {
+public class DietFragment extends Fragment implements SettingsFragmentInterface {
     TextView txtSubtitle;
+    Spinner spnDiet;
+    Button btnNext;
 
     public DietFragment() {
         // Required empty public constructor
@@ -30,8 +36,8 @@ public class DietFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_diet, container, false);
 
-        Spinner spnDiet = rootView.findViewById(R.id.spnDiet);
-        Button btnNext = rootView.findViewById(R.id.btnNext);
+        spnDiet = rootView.findViewById(R.id.spnDiet);
+        btnNext = rootView.findViewById(R.id.btnNext);
         txtSubtitle = rootView.findViewById(R.id.txtSubtitle);
 
         ArrayAdapter dietAdapter = new ArrayAdapter<>(getContext(), R.layout.simple_spinner_item, getResources().getStringArray(R.array.diets));
@@ -50,5 +56,11 @@ public class DietFragment extends Fragment {
     }
     public void setName(String name) {
         txtSubtitle.setText("What is your diet like " + name + "?");
+    }
+
+    public Dictionary getData() {
+        Dictionary output = new Hashtable();
+        output.put(Constants.PREF_DIET, spnDiet.getSelectedItem().toString());
+        return output;
     }
 }

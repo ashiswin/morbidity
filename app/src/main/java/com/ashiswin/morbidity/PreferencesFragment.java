@@ -51,11 +51,11 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
-                String yourString = o.toString();
-                sharedPreferences.edit().putString("name", yourString).apply();
-                editTextPreference.setSummary(yourString);
+            String yourString = o.toString();
+            sharedPreferences.edit().putString("name", yourString).apply();
+            editTextPreference.setSummary(yourString);
 
-                return true;
+            return true;
             }
         });
     }

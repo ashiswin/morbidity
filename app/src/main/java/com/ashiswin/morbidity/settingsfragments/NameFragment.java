@@ -16,12 +16,17 @@ import android.widget.EditText;
 
 import com.ashiswin.morbidity.GetStartedActivity;
 import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.utils.Constants;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NameFragment extends Fragment {
+public class NameFragment extends Fragment implements SettingsFragmentInterface{
     public String name;
+    public EditText edtName;
 
     public NameFragment() {
         // Required empty public constructor
@@ -33,7 +38,7 @@ public class NameFragment extends Fragment {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_name, container, false);
 
-        EditText edtName = rootView.findViewById(R.id.edtName);
+        edtName = rootView.findViewById(R.id.edtName);
         final Button btnNext = rootView.findViewById(R.id.btnNext);
 
         edtName.addTextChangedListener(new TextWatcher() {
@@ -75,6 +80,12 @@ public class NameFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    public Dictionary getData() {
+        Dictionary output = new Hashtable();
+        output.put(Constants.PREF_NAME, edtName.getText().toString());
+        return output;
     }
 
 }

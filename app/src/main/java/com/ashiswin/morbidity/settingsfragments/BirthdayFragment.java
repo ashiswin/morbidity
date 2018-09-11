@@ -2,7 +2,9 @@ package com.ashiswin.morbidity.settingsfragments;
 
 
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +16,18 @@ import android.widget.TextView;
 
 import com.ashiswin.morbidity.GetStartedActivity;
 import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BirthdayFragment extends Fragment {
+public class BirthdayFragment extends Fragment implements SettingsFragmentInterface {
     TextView txtSubtitle;
     Button btnBirthday;
 
@@ -84,9 +89,17 @@ public class BirthdayFragment extends Fragment {
         txtSubtitle.setText("When were you born " + name + "?");
     }
 
+    public Dictionary getData() {
+        String date = Constants.BIRTHDAY_FORMAT.format(myCalendar.getTime());
+        Dictionary output = new Hashtable();
+        output.put(Constants.PREF_BIRTHDAY, date);
+
+        return output;
+    }
+
     private void updateLabel() {
         String myFormat = "dd MMM yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         btnBirthday.setText(sdf.format(myCalendar.getTime()));
     }
 }

@@ -13,12 +13,17 @@ import android.widget.TextView;
 
 import com.ashiswin.morbidity.GetStartedActivity;
 import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.utils.Constants;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SexFragment extends Fragment {
+public class SexFragment extends Fragment implements SettingsFragmentInterface {
     TextView txtSubtitle;
+    Spinner spnSex;
 
     public SexFragment() {
         // Required empty public constructor
@@ -29,7 +34,7 @@ public class SexFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sex, container, false);
 
-        Spinner spnSex = rootView.findViewById(R.id.spnSex);
+        spnSex = rootView.findViewById(R.id.spnSex);
         Button btnNext = rootView.findViewById(R.id.btnNext);
         txtSubtitle = rootView.findViewById(R.id.txtSubtitle);
 
@@ -50,5 +55,11 @@ public class SexFragment extends Fragment {
 
     public void setName(String name) {
         txtSubtitle.setText("What is your sex " + name + "?");
+    }
+
+    public Dictionary getData() {
+        Dictionary output = new Hashtable();
+        output.put(Constants.PREF_SEX, spnSex.getSelectedItem().toString());
+        return output;
     }
 }
