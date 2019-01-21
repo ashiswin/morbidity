@@ -1,7 +1,9 @@
 package com.ashiswin.morbidity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +24,6 @@ public class LaunchScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
-
         imgLogo = findViewById(R.id.imgLogo);
         btnGetStarted = findViewById(R.id.btnGetStarted);
         txtTitle = findViewById(R.id.txtTitle);
@@ -39,6 +40,13 @@ public class LaunchScreen extends AppCompatActivity {
             }
         }, 1000);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LaunchScreen.this);
+        if(preferences.getBoolean("setup-complete", false)) {
+            Intent homeIntent = new Intent(LaunchScreen.this, HomeActivity.class);
+            startActivity(homeIntent);
+            finish();
+        }
+
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +61,11 @@ public class LaunchScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == GET_STARTED_INTENT && resultCode == RESULT_OK) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LaunchScreen.this);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("setup-complete", true);
+            editor.apply();
+
             Intent homeIntent = new Intent(LaunchScreen.this, HomeActivity.class);
             startActivity(homeIntent);
             finish();

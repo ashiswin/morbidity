@@ -30,6 +30,7 @@ import com.dinuscxj.progressbar.CircleProgressBar;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Calendar c;
     Timer timer;
+    String timeLeft = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Update countdown clock every second
         timer = new Timer();
+
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -93,7 +96,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 seconds = difference;
 
-                final String timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
+                timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -106,10 +109,13 @@ public class HomeActivity extends AppCompatActivity {
         }, 0, 1000);
 
         // TODO: Do actual notifications
+        BucketListDataSource ds = new BucketListDataSource(getBaseContext());
+        List<String> items = ds.getBucketList();
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "MorbidityChannel")
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Morbidity")
-                .setContentText("Sup")
+                .setContentTitle(timeLeft)
+                .setContentText("Why don't you " + items.get(0) + " today?")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
