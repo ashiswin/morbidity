@@ -73,9 +73,35 @@ public class HomeActivity extends AppCompatActivity {
 
         lineProgress.setProgressFormatter(new MyProgressFormatter());
 
+        BucketListDataSource ds = new BucketListDataSource(getBaseContext());
+        List<String> items = ds.getBucketList();
+
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(HomeActivity.this, "MorbidityChannel")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(timeLeft)
+                .setOngoing(false)
+                .setOnlyAlertOnce(true)
+                .setContentText("Why don't you " + items.get(0) + " today?")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Morbidity Channel";
+            String description = "Morbidity's Channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(HomeActivity.this);
+        notificationManager.notify(0, mBuilder.build());
+
         // Update countdown clock every second
         timer = new Timer();
-
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -97,41 +123,20 @@ public class HomeActivity extends AppCompatActivity {
                 seconds = difference;
 
                 timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         txtTimeLeft.setText(timeLeft);
                         txtPercentage.setText(percentage + "%");
                         lineProgress.setProgress(Math.round(percentage));
+
+                        mBuilder.setContentTitle(timeLeft);
+                        notificationManager.notify(0, mBuilder.build());
                     }
                 });
             }
         }, 0, 1000);
-
-        // TODO: Do actual notifications
-        BucketListDataSource ds = new BucketListDataSource(getBaseContext());
-        List<String> items = ds.getBucketList();
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "MorbidityChannel")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(timeLeft)
-                .setContentText("Why don't you " + items.get(0) + " today?")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Morbidity Channel";
-            String description = "Morbidity's Channel";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0, mBuilder.build());
     }
 
     @Override
