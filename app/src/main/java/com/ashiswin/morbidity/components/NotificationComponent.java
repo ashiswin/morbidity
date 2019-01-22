@@ -2,7 +2,9 @@ package com.ashiswin.morbidity.components;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -14,6 +16,7 @@ import com.ashiswin.morbidity.ui.HomeActivity;
 import java.util.List;
 
 public class NotificationComponent implements CountdownComponent.Updatable {
+    private static final int LAUNCH_ACTIVITY_PENDING_INTENT = 0;
     private static NotificationComponent mInstance = null;
     private Context context;
 
@@ -27,11 +30,17 @@ public class NotificationComponent implements CountdownComponent.Updatable {
         BucketListDataSource ds = new BucketListDataSource(context);
         bucketListItems = ds.getBucketList();
 
+        Intent launchIntent = new Intent(context, HomeActivity.class);
+        PendingIntent launchPendingIntent = PendingIntent.getActivity(context, LAUNCH_ACTIVITY_PENDING_INTENT, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // TODO: Prevent opening activity if activity already open
+
         mBuilder = new NotificationCompat.Builder(context, "MorbidityChannel")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setOngoing(false)
                 .setOnlyAlertOnce(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(launchPendingIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Morbidity Channel";

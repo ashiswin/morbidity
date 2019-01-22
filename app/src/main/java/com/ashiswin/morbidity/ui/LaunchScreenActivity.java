@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.utils.LayoutUtils;
 
-public class LaunchScreen extends AppCompatActivity {
+public class LaunchScreenActivity extends AppCompatActivity {
     private static final int GET_STARTED_INTENT = 0;
 
     ImageView imgLogo;
@@ -32,18 +32,18 @@ public class LaunchScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                imgLogo.animate().scaleX(0.5f).scaleY(0.5f).translationY(-LayoutUtils.convertDip2Pixels(LaunchScreen.this, 192));
+                imgLogo.animate().scaleX(0.5f).scaleY(0.5f).translationY(-LayoutUtils.convertDip2Pixels(LaunchScreenActivity.this, 192));
                 btnGetStarted.setVisibility(View.VISIBLE);
                 txtTitle.setVisibility(View.VISIBLE);
                 btnGetStarted.animate().alpha(1).setDuration(500);
-                txtTitle.animate().translationY(-LayoutUtils.convertDip2Pixels(LaunchScreen.this, 240)).setDuration(0);
+                txtTitle.animate().translationY(-LayoutUtils.convertDip2Pixels(LaunchScreenActivity.this, 240)).setDuration(0);
                 txtTitle.animate().alpha(1).setDuration(500);
             }
         }, 1000);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LaunchScreen.this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LaunchScreenActivity.this);
         if(preferences.getBoolean("setup-complete", false)) {
-            Intent homeIntent = new Intent(LaunchScreen.this, HomeActivity.class);
+            Intent homeIntent = new Intent(LaunchScreenActivity.this, HomeActivity.class);
             startActivity(homeIntent);
             finish();
         }
@@ -51,7 +51,7 @@ public class LaunchScreen extends AppCompatActivity {
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent getStartedIntent = new Intent(LaunchScreen.this, GetStartedActivity.class);
+                Intent getStartedIntent = new Intent(LaunchScreenActivity.this, GetStartedActivity.class);
                 startActivityForResult(getStartedIntent, GET_STARTED_INTENT);
             }
         });
@@ -62,12 +62,12 @@ public class LaunchScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == GET_STARTED_INTENT && resultCode == RESULT_OK) {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LaunchScreen.this);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LaunchScreenActivity.this);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("setup-complete", true);
             editor.apply();
 
-            Intent homeIntent = new Intent(LaunchScreen.this, HomeActivity.class);
+            Intent homeIntent = new Intent(LaunchScreenActivity.this, HomeActivity.class);
             startActivity(homeIntent);
             finish();
         }

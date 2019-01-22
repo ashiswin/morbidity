@@ -47,7 +47,7 @@
         </receiver>
 
         <activity android:name=".ui.BucketListActivity" />
-        <activity android:name=".ui.LaunchScreen">
+        <activity android:name=".ui.LaunchScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
