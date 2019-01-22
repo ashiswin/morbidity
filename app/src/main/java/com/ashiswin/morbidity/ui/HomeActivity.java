@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.components.CountdownComponent;
+import com.ashiswin.morbidity.components.NotificationComponent;
 import com.ashiswin.morbidity.datasources.BucketListDataSource;
 import com.ashiswin.morbidity.utils.Constants;
 import com.dinuscxj.progressbar.CircleProgressBar;
@@ -59,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     CircleProgressBar lineProgress;
 
     CountdownComponent countdown;
-
+    NotificationComponent notification;
 //    Calendar c;
 //    Timer timer;
 //    String timeLeft = "";
@@ -83,36 +84,11 @@ public class HomeActivity extends AppCompatActivity {
         wrpPercentage = new TextViewWrapper(txtPercentage, false);
 
         countdown = CountdownComponent.getInstance(HomeActivity.this);
+        notification = NotificationComponent.getInstance(HomeActivity.this);
 
         countdown.register(wrpTimeLeft);
         countdown.register(wrpPercentage);
-//        BucketListDataSource ds = new BucketListDataSource(getBaseContext());
-//        List<String> items = ds.getBucketList();
-//
-//        if(items.size() > 0) {
-//            final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(HomeActivity.this, "MorbidityChannel")
-//                    .setSmallIcon(R.mipmap.ic_launcher)
-//                    .setContentTitle(timeLeft)
-//                    .setOngoing(false)
-//                    .setOnlyAlertOnce(true)
-//                    .setContentText("Why don't you " + items.get(0) + " today?")
-//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                CharSequence name = "Morbidity Channel";
-//                String description = "Morbidity's Channel";
-//                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//                NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
-//                channel.setDescription(description);
-//                // Register the channel with the system; you can't change the importance
-//                // or other notification behaviors after this
-//                NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//                notificationManager.createNotificationChannel(channel);
-//            }
-//
-//            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(HomeActivity.this);
-//            notificationManager.notify(0, mBuilder.build());
-//        }
+        countdown.register(notification);
     }
 
     @Override
