@@ -115,6 +115,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if(requestCode == INTENT_SETTINGS) {
             countdown.refreshPreferences();
+            wrpPercentage.firstAnimation = true;
         }
     }
     /**
