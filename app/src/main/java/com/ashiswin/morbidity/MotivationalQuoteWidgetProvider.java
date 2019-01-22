@@ -3,7 +3,6 @@ package com.ashiswin.morbidity;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -14,7 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -30,9 +28,7 @@ import java.util.Map;
 
 public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
 
-    public void onUpdate(Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
-        final int N = appWidgetIds.length;
-        final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_motivational_quote);
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
         final RequestQueue queue = Volley.newRequestQueue(context);
         final String url = "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
         // final String url ="https://quotes.rest/qod";
@@ -63,13 +59,15 @@ public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
                         Log.e("Read Json Object", "onResponse: ", e);
                     }
 
-                    updateAll(N, quote, author, views, appWidgetManager, appWidgetIds);
+                    updateAppWidgets(context, appWidgetManager, appWidgetIds,
+                                     quote, author);
                 }
             }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    updateAll(N, default_quote, default_author, views, appWidgetManager, appWidgetIds);
+                    updateAppWidgets(context, appWidgetManager, appWidgetIds,
+                                     default_quote, default_author);
                 }
             })
         {
@@ -86,21 +84,19 @@ public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
         queue.add(jsonArrayRequest);
     }
 
-    private void updateAll(int widgetLength, String quote, String author,
-                           RemoteViews views, AppWidgetManager appWidgetManager,
-                           int[] appWidgetIds) {
+    private static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
+                                         int[] appWidgetIds, String quote, String author) {
 
-        // Perform this loop procedure for each App Widget that belongs to this provider
+        // Construct the RemoteViews object and update object
+        RemoteViews views = new RemoteViews(context.getPackageName(),
+                                            R.layout.motivational_quote_widget);
+        views.setTextViewText(R.id.widget_motivational_quote, quote);
+        views.setTextViewText(R.id.widget_motivational_author, author);
+
+        // Instruct the widget manager to update widgets
+        final int widgetLength = appWidgetIds.length;
         for (int i = 0; i < widgetLength; i++) {
             int appWidgetId = appWidgetIds[i];
-            views.setTextViewText(
-                    R.id.widget_motivational_quote,
-                    quote
-            );
-            views.setTextViewText(
-                    R.id.widget_motivational_author,
-                    author
-            );
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }

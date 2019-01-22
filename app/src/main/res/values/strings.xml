@@ -1,4 +1,12 @@
 <resources>
+    <!-- Widget Values-->
+    <string name="count_down_widget_title">Time is running out</string>
+    <string name="day">Day</string>
+    <string name="hour">Hr</string>
+    <string name="minute">Min</string>
+    <string name="second">Sec</string>
+
+    <!-- App Values-->
     <string name="default_quote">God limits our days to make each one more precious</string>
     <string name="default_caption">until the end</string>
     <string name="default_percentage">0%</string>
@@ -292,4 +300,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

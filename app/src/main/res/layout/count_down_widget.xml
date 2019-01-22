@@ -1,0 +1,153 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/count_down_widget_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/count_down_body">
+
+        <TextView
+            android:id="@+id/count_down_widget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="@dimen/widget_margin"
+            android:text="@string/count_down_widget_title"
+            android:textAllCaps="true"
+            android:textColor="@color/textWhite"
+            android:fontFamily="@font/roboto_thin"
+            android:textSize="@dimen/widget_clock_text_size"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/widget_margin"
+            android:layout_toLeftOf="@id/count_down_widget_title"
+            android:background="#FFF"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/widget_margin"
+            android:layout_toRightOf="@id/count_down_widget_title"
+            android:background="#FFF"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/count_down_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/count_down_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="20839"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/widget_clock_number_size"
+                android:fontFamily="@font/roboto_thin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/count_down_day"
+                android:layout_centerHorizontal="true"
+                android:text="@string/day"
+                android:textAllCaps="true"
+                android:textSize="@dimen/widget_clock_text_size"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=":"
+            android:textAlignment="center"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/widget_clock_number_size"
+            android:fontFamily="@font/roboto_thin"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/count_down_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="07"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/widget_clock_number_size"
+                android:fontFamily="@font/roboto_thin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/count_down_hour"
+                android:layout_centerHorizontal="true"
+                android:text="@string/hour"
+                android:textAllCaps="true"
+                android:textSize="@dimen/widget_clock_text_size"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=":"
+            android:textAlignment="center"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/widget_clock_number_size"
+            android:fontFamily="@font/roboto_thin"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/count_down_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="23"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/widget_clock_number_size"
+                android:fontFamily="@font/roboto_thin"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/count_down_minute"
+                android:layout_centerHorizontal="true"
+                android:text="@string/minute"
+                android:textAllCaps="true"
+                android:textSize="@dimen/widget_clock_text_size"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

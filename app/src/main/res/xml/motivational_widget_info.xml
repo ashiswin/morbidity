@@ -5,7 +5,7 @@
     android:minHeight="40dp"
     android:updatePeriodMillis="3600000"
     android:previewImage="@drawable/motivation_quote_preview"
-    android:initialLayout="@layout/widget_motivational_quote"
+    android:initialLayout="@layout/motivational_quote_widget"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen">
 </appwidget-provider>
