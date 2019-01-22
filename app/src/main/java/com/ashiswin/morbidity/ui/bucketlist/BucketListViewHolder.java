@@ -1,10 +1,12 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui.bucketlist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ashiswin.morbidity.R;
 
 /**
  * Created by ashis on 8/19/2018.

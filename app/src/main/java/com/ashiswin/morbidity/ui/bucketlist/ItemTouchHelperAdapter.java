@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui.bucketlist;
 
 /*
  * Copyright (C) 2015 Paul Burke

@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui.bucketlist;
 
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.datasources.BucketListDataSource;
 
 import java.util.Collections;

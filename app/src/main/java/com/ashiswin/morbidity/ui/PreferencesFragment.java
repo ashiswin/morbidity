@@ -9,7 +9,7 @@ import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.ashiswin.morbidity.DatePreference;
+import com.ashiswin.morbidity.utils.DatePreference;
 import com.ashiswin.morbidity.DatePreferenceDialogFragmentCompat;
 import com.ashiswin.morbidity.R;
 

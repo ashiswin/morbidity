@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity.utils;
+package com.ashiswin.morbidity.ui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

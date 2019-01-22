@@ -18,15 +18,12 @@ import java.util.List;
 public class NotificationComponent implements CountdownComponent.Updatable {
     private static final int LAUNCH_ACTIVITY_PENDING_INTENT = 0;
     private static NotificationComponent mInstance = null;
-    private Context context;
 
     private NotificationCompat.Builder mBuilder = null;
     private NotificationManagerCompat notificationManager = null;
     private List<String> bucketListItems = null;
 
     private NotificationComponent(Context context) {
-        this.context = context;
-
         BucketListDataSource ds = new BucketListDataSource(context);
         bucketListItems = ds.getBucketList();
 

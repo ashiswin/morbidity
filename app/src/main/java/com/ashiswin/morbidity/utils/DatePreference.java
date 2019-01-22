@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.utils;
 
 /**
  * Created by ashis on 7/8/2018.

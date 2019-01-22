@@ -8,7 +8,7 @@
         android:icon="@drawable/preference_name"
         android:dialogMessage="Dialog Message" />
 
-    <com.ashiswin.morbidity.DatePreference
+    <com.ashiswin.morbidity.utils.DatePreference
         android:key="birthday"
         android:title="Birthday"
         android:icon="@drawable/cake"/>

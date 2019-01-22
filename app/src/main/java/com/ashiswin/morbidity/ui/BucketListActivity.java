@@ -16,9 +16,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.ashiswin.morbidity.BucketListAdapter;
-import com.ashiswin.morbidity.BucketListTouchHelperCallback;
-import com.ashiswin.morbidity.OnStartDragListener;
+import com.ashiswin.morbidity.ui.bucketlist.BucketListAdapter;
+import com.ashiswin.morbidity.ui.bucketlist.BucketListTouchHelperCallback;
+import com.ashiswin.morbidity.ui.bucketlist.OnStartDragListener;
 import com.ashiswin.morbidity.R;
 
 public class BucketListActivity extends AppCompatActivity implements OnStartDragListener {
