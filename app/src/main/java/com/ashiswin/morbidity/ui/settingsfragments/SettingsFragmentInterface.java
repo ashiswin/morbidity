@@ -1,8 +1,6 @@
-package com.ashiswin.morbidity.settingsfragments;
+package com.ashiswin.morbidity.ui.settingsfragments;
 
 import android.util.Pair;
-
-import java.util.Dictionary;
 
 public interface SettingsFragmentInterface {
 

@@ -1,10 +1,12 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.ashiswin.morbidity.R;
 
 
 public class SettingsActivity extends AppCompatActivity {

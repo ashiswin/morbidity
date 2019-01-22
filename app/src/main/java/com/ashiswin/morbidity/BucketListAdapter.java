@@ -3,15 +3,14 @@ package com.ashiswin.morbidity;
 import android.content.Context;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.ashiswin.morbidity.datasources.BucketListDataSource;
+
 import java.util.Collections;
 import java.util.List;
 

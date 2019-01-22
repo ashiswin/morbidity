@@ -1,26 +1,25 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui;
 
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.ashiswin.morbidity.BucketListAdapter;
+import com.ashiswin.morbidity.BucketListTouchHelperCallback;
+import com.ashiswin.morbidity.OnStartDragListener;
+import com.ashiswin.morbidity.R;
 
 public class BucketListActivity extends AppCompatActivity implements OnStartDragListener {
     RecyclerView lstBucketList;

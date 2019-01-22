@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.utils.LayoutUtils;
 
 public class LaunchScreen extends AppCompatActivity {

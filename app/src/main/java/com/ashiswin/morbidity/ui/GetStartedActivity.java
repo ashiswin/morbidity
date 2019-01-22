@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -10,20 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.Pair;
 import android.widget.TextView;
 
-import com.ashiswin.morbidity.settingsfragments.BirthdayFragment;
-import com.ashiswin.morbidity.settingsfragments.DietFragment;
-import com.ashiswin.morbidity.settingsfragments.NameFragment;
-import com.ashiswin.morbidity.settingsfragments.SettingsFragmentInterface;
-import com.ashiswin.morbidity.settingsfragments.SexFragment;
-import com.ashiswin.morbidity.settingsfragments.WorkoutFragment;
+import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.ui.settingsfragments.BirthdayFragment;
+import com.ashiswin.morbidity.ui.settingsfragments.DietFragment;
+import com.ashiswin.morbidity.ui.settingsfragments.NameFragment;
+import com.ashiswin.morbidity.ui.settingsfragments.SettingsFragmentInterface;
+import com.ashiswin.morbidity.ui.settingsfragments.SexFragment;
+import com.ashiswin.morbidity.ui.settingsfragments.WorkoutFragment;
 import com.ashiswin.morbidity.utils.LayoutUtils;
-
-import java.util.Dictionary;
-import java.util.Enumeration;
 
 
 public class GetStartedActivity extends AppCompatActivity {

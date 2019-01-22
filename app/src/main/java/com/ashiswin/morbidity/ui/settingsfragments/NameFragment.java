@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity.settingsfragments;
+package com.ashiswin.morbidity.ui.settingsfragments;
 
 
 import android.app.Activity;
@@ -15,12 +15,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.ashiswin.morbidity.GetStartedActivity;
+import com.ashiswin.morbidity.ui.GetStartedActivity;
 import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.utils.Constants;
-
-import java.util.Dictionary;
-import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.

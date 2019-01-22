@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.datasources;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,10 +1,8 @@
-package com.ashiswin.morbidity.settingsfragments;
+package com.ashiswin.morbidity.ui.settingsfragments;
 
 
 import android.app.DatePickerDialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -12,17 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.ashiswin.morbidity.GetStartedActivity;
+import com.ashiswin.morbidity.ui.GetStartedActivity;
 import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Locale;
 
 /**

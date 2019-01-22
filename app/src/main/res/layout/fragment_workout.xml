@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_layout"
-    tools:context=".settingsfragments.WorkoutFragment"
+    tools:context=".ui.settingsfragments.WorkoutFragment"
     android:orientation="vertical"
     android:padding="16dp">
     <ImageView

@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui;
 
 import android.animation.ValueAnimator;
 import android.app.Dialog;
@@ -24,6 +24,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.datasources.BucketListDataSource;
 import com.ashiswin.morbidity.utils.Constants;
 import com.dinuscxj.progressbar.CircleProgressBar;
 
