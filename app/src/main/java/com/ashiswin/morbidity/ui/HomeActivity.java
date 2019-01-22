@@ -25,6 +25,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.components.CountdownComponent;
 import com.ashiswin.morbidity.datasources.BucketListDataSource;
 import com.ashiswin.morbidity.utils.Constants;
 import com.dinuscxj.progressbar.CircleProgressBar;
@@ -46,19 +47,22 @@ public class HomeActivity extends AppCompatActivity {
     String sex;
     String country;
     int sexIndex;
-    long percentage = 0;
-    long days = 0;
-    long hours = 0;
-    long minutes = 0;
-    long seconds = 0;
-    long difference = 0;
+//    long percentage = 0;
+//    long days = 0;
+//    long hours = 0;
+//    long minutes = 0;
+//    long seconds = 0;
+//    long difference = 0;
 
     TextView txtTimeLeft, txtPercentage;
+    TextViewWrapper wrpTimeLeft, wrpPercentage;
     CircleProgressBar lineProgress;
 
-    Calendar c;
-    Timer timer;
-    String timeLeft = "";
+    CountdownComponent countdown;
+
+//    Calendar c;
+//    Timer timer;
+//    String timeLeft = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,84 +79,55 @@ public class HomeActivity extends AppCompatActivity {
 
         lineProgress.setProgressFormatter(new MyProgressFormatter());
 
-        BucketListDataSource ds = new BucketListDataSource(getBaseContext());
-        List<String> items = ds.getBucketList();
+        wrpTimeLeft = new TextViewWrapper(txtTimeLeft, true);
+        wrpPercentage = new TextViewWrapper(txtPercentage, false);
 
-        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(HomeActivity.this, "MorbidityChannel")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(timeLeft)
-                .setOngoing(false)
-                .setOnlyAlertOnce(true)
-                .setContentText("Why don't you " + items.get(0) + " today?")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        countdown = CountdownComponent.getInstance(HomeActivity.this);
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Morbidity Channel";
-            String description = "Morbidity's Channel";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(HomeActivity.this);
-        notificationManager.notify(0, mBuilder.build());
-
-        // Update countdown clock every second
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if(birthday == null) return;
-
-                c = Calendar.getInstance();
-                difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
-                percentage = 100 - (difference * 100 / (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L));
-
-                days = difference / (24L * 60L * 60L);
-                difference = difference % (24 * 60 * 60);
-
-                hours = difference / (60 * 60);
-                difference = difference % (60 * 60);
-
-                minutes = difference / 60;
-                difference = difference % 60;
-
-                seconds = difference;
-
-                timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        txtTimeLeft.setText(timeLeft);
-                        txtPercentage.setText(percentage + "%");
-                        lineProgress.setProgress(Math.round(percentage));
-
-                        mBuilder.setContentTitle(timeLeft);
-                        notificationManager.notify(0, mBuilder.build());
-                    }
-                });
-            }
-        }, 0, 1000);
+        countdown.register(wrpTimeLeft);
+        countdown.register(wrpPercentage);
+//        BucketListDataSource ds = new BucketListDataSource(getBaseContext());
+//        List<String> items = ds.getBucketList();
+//
+//        if(items.size() > 0) {
+//            final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(HomeActivity.this, "MorbidityChannel")
+//                    .setSmallIcon(R.mipmap.ic_launcher)
+//                    .setContentTitle(timeLeft)
+//                    .setOngoing(false)
+//                    .setOnlyAlertOnce(true)
+//                    .setContentText("Why don't you " + items.get(0) + " today?")
+//                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                CharSequence name = "Morbidity Channel";
+//                String description = "Morbidity's Channel";
+//                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+//                NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
+//                channel.setDescription(description);
+//                // Register the channel with the system; you can't change the importance
+//                // or other notification behaviors after this
+//                NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//                notificationManager.createNotificationChannel(channel);
+//            }
+//
+//            final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(HomeActivity.this);
+//            notificationManager.notify(0, mBuilder.build());
+//        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (percentage != 0) {
-            animateProgress(Math.round(percentage));
-        }
+//        if (percentage != 0) {
+//            animateProgress(Math.round(percentage));
+//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        timer.cancel();
+        countdown.deregister(wrpTimeLeft);
+        countdown.deregister(wrpPercentage);
     }
 
     @Override
@@ -253,6 +228,41 @@ public class HomeActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(dialogWidth, dialogHeight);
 
         dialog.show();
+    }
+
+    class TextViewWrapper implements CountdownComponent.Updateable {
+        TextView v;
+        boolean timeLeft;
+        boolean firstAnimation = true;
+
+        public TextViewWrapper(TextView v, boolean timeLeft) {
+            this.v = v;
+            this.timeLeft = timeLeft;
+        }
+
+        @Override
+        public void update(final String timeLeft, final long percentage) {
+            if(this.timeLeft) {
+                v.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        v.setText(timeLeft);
+                    }
+                });
+            }
+            else {
+                v.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        v.setText(percentage + "%");
+                        if (percentage != 0 && firstAnimation) {
+                            animateProgress(Math.round(percentage));
+                            firstAnimation = false;
+                        }
+                    }
+                });
+            }
+        }
     }
 }
 
