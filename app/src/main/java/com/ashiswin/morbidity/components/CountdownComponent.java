@@ -30,27 +30,21 @@ public class CountdownComponent {
 
     private ArrayList<Updatable> subscribers = new ArrayList<>();
 
+    private int sexIndex;
+    private Date birthday;
+
     private CountdownComponent(Context context) {
         this.context = context;
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Date birthday = null;
-        try {
-            birthday = Constants.BIRTHDAY_FORMAT.parse(preferences.getString(Constants.PREF_BIRTHDAY, ""));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String sex = preferences.getString(Constants.PREF_SEX, "");
-        final int sexIndex = (sex.equals("Male")) ? 0 : 1;
-        final Date finalBirthday = birthday;
+        refreshPreferences();
 
         countdownTimerTask = new TimerTask() {
             @Override
             public void run() {
-                if(finalBirthday == null) return;
+                if(birthday == null) return;
 
                 Calendar c = Calendar.getInstance();
-                long difference = (finalBirthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
+                long difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
                 long percentage = 100 - (difference * 100 / (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L));
 
                 long days = difference / (24L * 60L * 60L);
@@ -81,6 +75,18 @@ public class CountdownComponent {
         return mInstance;
     }
 
+    public void refreshPreferences() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        birthday = null;
+        try {
+            birthday = Constants.BIRTHDAY_FORMAT.parse(preferences.getString(Constants.PREF_BIRTHDAY, ""));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String sex = preferences.getString(Constants.PREF_SEX, "");
+        sexIndex = (sex.equals("Male")) ? 0 : 1;
+    }
     public void register(Updatable u) {
         subscribers.add(u);
 

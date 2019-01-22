@@ -42,37 +42,18 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
     private static final int INTENT_SETTINGS = 0;
 
-    SharedPreferences preferences;
-
-    Date birthday;
-    String sex;
-    String country;
-    int sexIndex;
-//    long percentage = 0;
-//    long days = 0;
-//    long hours = 0;
-//    long minutes = 0;
-//    long seconds = 0;
-//    long difference = 0;
-
     TextView txtTimeLeft, txtPercentage;
     TextViewWrapper wrpTimeLeft, wrpPercentage;
     CircleProgressBar lineProgress;
 
     CountdownComponent countdown;
     NotificationComponent notification;
-//    Calendar c;
-//    Timer timer;
-//    String timeLeft = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setToolbar();
-
-        preferences = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-
-        loadPreferences();
 
         txtTimeLeft = findViewById(R.id.txtTimeLeft);
         txtPercentage = findViewById(R.id.txtPercentage);
@@ -133,22 +114,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == INTENT_SETTINGS) {
-            loadPreferences();
+            countdown.refreshPreferences();
         }
     }
-
-    private void loadPreferences() {
-        try {
-            birthday = Constants.BIRTHDAY_FORMAT.parse(preferences.getString(Constants.PREF_BIRTHDAY, ""));
-            Log.d(TAG, birthday.getMonth() + "");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        sex = preferences.getString(Constants.PREF_SEX, "");
-        country = preferences.getString(Constants.PREF_COUNTRY, "");
-        sexIndex = (sex.equals("Male")) ? 0 : 1;
-    }
-
     /**
      * Set toolbar parameters in this method
      */
