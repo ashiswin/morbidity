@@ -6,7 +6,3 @@ Morbidity aims to be an application that reminds you of just how much time you h
 
 * **Isaac Aswhin** - *Developer* - [ashiswin](https://github.com/ashiswin)
 * **Rayson Lim** - *Developer, UI Engineer* - [nosyarlin](https://github.com/nosyarlin)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
