@@ -2,7 +2,9 @@ package com.ashiswin.morbidity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BootReceiver extends BroadcastReceiver {
+
+    private static ArrayList<Schedulable> registered = new ArrayList<>();
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,5 +40,24 @@ public class BootReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(0, mBuilder.build());
+
+
+        // Schedule widgets to update once we boot
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        for (Schedulable schedulable: registered) {
+            int[] ids = appWidgetManager.getAppWidgetIds(new ComponentName(context,
+                                                                           schedulable.getClass()));
+            if (ids.length > 0) {
+                schedulable.scheduleUpdates(context);
+            }
+        }
+    }
+
+    public static void register(Schedulable schedulable) {
+        registered.add(schedulable);
+    }
+
+    public static void unregister(Schedulable schedulable) {
+        registered.remove(schedulable);
     }
 }

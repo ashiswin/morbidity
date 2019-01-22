@@ -13,7 +13,7 @@ import java.util.Calendar;
 /**
  * Implementation of App Widget functionality.
  */
-public class CountDownWidgetProvider extends AppWidgetProvider {
+public class CountDownWidgetProvider extends AppWidgetProvider implements Schedulable {
 
     public static final String ACTION_UPDATE = "update please";
 
@@ -31,13 +31,14 @@ public class CountDownWidgetProvider extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         // Tell scheduler to schedule widget for update
-        long intervalMillis = 60 * 1000;
-        Scheduler.scheduleUpdate(context, getAlarmIntent(context), intervalMillis);
+        BootReceiver.register(this);
+        scheduleUpdates(context);
     }
 
     @Override
     public void onDisabled(Context context) {
         // Remove updating schedule from scheduler
+        BootReceiver.unregister(this);
         Scheduler.clearUpdate(context, getAlarmIntent(context));
     }
 
@@ -53,9 +54,14 @@ public class CountDownWidgetProvider extends AppWidgetProvider {
         } else super.onReceive(context, intent);
     }
 
-    private static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
-                                         int[] appWidgetIds, String countDownDay,
-                                         String countDownHour, String countDownMin) {
+    public void scheduleUpdates(Context context) {
+        long intervalMillis = 60 * 1000;
+        Scheduler.scheduleUpdate(context, getAlarmIntent(context), intervalMillis);
+    }
+
+    private void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
+                                  int[] appWidgetIds, String countDownDay,
+                                  String countDownHour, String countDownMin) {
 
         // Construct the RemoteViews object and update them
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.count_down_widget);
@@ -71,7 +77,7 @@ public class CountDownWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    private static PendingIntent getAlarmIntent(Context context) {
+    private PendingIntent getAlarmIntent(Context context) {
         Intent intent = new Intent(context, CountDownWidgetProvider.class);
         intent.setAction(CountDownWidgetProvider.ACTION_UPDATE);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
