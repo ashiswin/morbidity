@@ -30,6 +30,7 @@ import com.dinuscxj.progressbar.CircleProgressBar;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -55,6 +56,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Calendar c;
     Timer timer;
+    String timeLeft = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,33 @@ public class HomeActivity extends AppCompatActivity {
         lineProgress = findViewById(R.id.line_progress);
 
         lineProgress.setProgressFormatter(new MyProgressFormatter());
+
+        BucketListDataSource ds = new BucketListDataSource(getBaseContext());
+        List<String> items = ds.getBucketList();
+
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(HomeActivity.this, "MorbidityChannel")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(timeLeft)
+                .setOngoing(false)
+                .setOnlyAlertOnce(true)
+                .setContentText("Why don't you " + items.get(0) + " today?")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Morbidity Channel";
+            String description = "Morbidity's Channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(HomeActivity.this);
+        notificationManager.notify(0, mBuilder.build());
 
         // Update countdown clock every second
         timer = new Timer();
@@ -93,39 +122,21 @@ public class HomeActivity extends AppCompatActivity {
 
                 seconds = difference;
 
-                final String timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
+                timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         txtTimeLeft.setText(timeLeft);
                         txtPercentage.setText(percentage + "%");
                         lineProgress.setProgress(Math.round(percentage));
+
+                        mBuilder.setContentTitle(timeLeft);
+                        notificationManager.notify(0, mBuilder.build());
                     }
                 });
             }
         }, 0, 1000);
-
-        // TODO: Do actual notifications
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "MorbidityChannel")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Morbidity")
-                .setContentText("Sup")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Morbidity Channel";
-            String description = "Morbidity's Channel";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("MorbidityChannel", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0, mBuilder.build());
     }
 
     @Override

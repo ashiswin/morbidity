@@ -9,6 +9,9 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BootReceiver extends BroadcastReceiver {
 
     @Override
