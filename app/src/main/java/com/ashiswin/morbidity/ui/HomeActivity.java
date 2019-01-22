@@ -118,14 +118,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        if (percentage != 0) {
-//            animateProgress(Math.round(percentage));
-//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        // Stop UI updates once activity is destroyed
         countdown.deregister(wrpTimeLeft);
         countdown.deregister(wrpPercentage);
     }
@@ -136,6 +135,7 @@ public class HomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -230,7 +230,7 @@ public class HomeActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    class TextViewWrapper implements CountdownComponent.Updateable {
+    class TextViewWrapper implements CountdownComponent.Updatable {
         TextView v;
         boolean timeLeft;
         boolean firstAnimation = true;

@@ -3,9 +3,7 @@ package com.ashiswin.morbidity.components;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
-import com.ashiswin.morbidity.ui.HomeActivity;
 import com.ashiswin.morbidity.utils.Constants;
 
 import java.text.ParseException;
@@ -19,9 +17,10 @@ import java.util.TimerTask;
  * CountdownComponent class
  *
  * This class will be a singleton that handles the countdown. Views can register to be
- * updated by this countdown. They need to adhere to the Updateable interface to specify
+ * updated by this countdown. They need to adhere to the Updatable interface to specify
  * their update logic.
  */
+
 public class CountdownComponent {
     private static CountdownComponent mInstance = null;
 
@@ -29,7 +28,7 @@ public class CountdownComponent {
     private TimerTask countdownTimerTask = null;
     private Context context;
 
-    private ArrayList<Updateable> subscribers = new ArrayList<>();
+    private ArrayList<Updatable> subscribers = new ArrayList<>();
 
     private CountdownComponent(Context context) {
         this.context = context;
@@ -67,7 +66,7 @@ public class CountdownComponent {
 
                 String timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
 
-                for(Updateable u : subscribers) {
+                for(Updatable u : subscribers) {
                     u.update(timeLeft, percentage);
                 }
             }
@@ -82,7 +81,7 @@ public class CountdownComponent {
         return mInstance;
     }
 
-    public void register(Updateable u) {
+    public void register(Updatable u) {
         subscribers.add(u);
 
         if(countdownTimer == null) {
@@ -92,7 +91,7 @@ public class CountdownComponent {
         }
     }
 
-    public void deregister(Updateable u) {
+    public void deregister(Updatable u) {
         subscribers.remove(u);
 
         if(subscribers.size() == 0) {
@@ -101,7 +100,7 @@ public class CountdownComponent {
         }
     }
 
-    public interface Updateable {
+    public interface Updatable {
         void update(String timeLeft, long percentage);
     }
 }
