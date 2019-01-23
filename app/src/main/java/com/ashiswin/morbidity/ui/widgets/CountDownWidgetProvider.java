@@ -27,8 +27,8 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Schedu
 
         String countDownDay = "20839";
         Calendar c = Calendar.getInstance();
-        String countDownHour = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
-        String countDownMinute = Integer.toString(c.get(Calendar.MINUTE));
+        String countDownHour = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
+        String countDownMinute = String.format("%02d", c.get(Calendar.MINUTE));
         updateAppWidgets(context, appWidgetManager, appWidgetIds,
                          countDownDay, countDownHour, countDownMinute);
     }
