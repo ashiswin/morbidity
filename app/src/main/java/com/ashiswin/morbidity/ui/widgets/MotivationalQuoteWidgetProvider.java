@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui.widgets;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.ashiswin.morbidity.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -73,8 +73,8 @@ public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
         {
             /** Passing some request headers* */
             @Override
-            public Map getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap();
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("X-RapidAPI-Key", "b0fd086fe0msh975bd8c14459cfep1eb72ejsn739659d5d4e5");
                 return headers;
             }
@@ -94,9 +94,7 @@ public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
         views.setTextViewText(R.id.widget_motivational_author, author);
 
         // Instruct the widget manager to update widgets
-        final int widgetLength = appWidgetIds.length;
-        for (int i = 0; i < widgetLength; i++) {
-            int appWidgetId = appWidgetIds[i];
+        for (int appWidgetId: appWidgetIds) {
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }

@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.ui.widgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,6 +7,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.ashiswin.morbidity.BootReceiver;
+import com.ashiswin.morbidity.R;
+import com.ashiswin.morbidity.Schedulable;
+import com.ashiswin.morbidity.Scheduler;
 
 import java.util.Calendar;
 
@@ -70,9 +75,7 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Schedu
         views.setTextViewText(R.id.count_down_minute, countDownMin);
 
         // Instruct the widget manager to update widgets
-        final int widgetLength = appWidgetIds.length;
-        for (int i = 0; i < widgetLength; i++) {
-            int appWidgetId = appWidgetIds[i];
+        for (int appWidgetId: appWidgetIds) {
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
