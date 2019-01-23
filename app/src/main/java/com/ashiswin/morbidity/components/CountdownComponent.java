@@ -1,5 +1,7 @@
 package com.ashiswin.morbidity.components;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -24,6 +26,7 @@ import java.util.TimerTask;
 public class CountdownComponent {
     private static CountdownComponent mInstance = null;
 
+    private AlarmManager am = null;
     private Timer countdownTimer = null;
     private TimerTask countdownTimerTask = null;
     private Context context;
@@ -43,28 +46,17 @@ public class CountdownComponent {
             public void run() {
                 if(birthday == null) return;
 
-                Calendar c = Calendar.getInstance();
-                long difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
-                long percentage = 100 - (difference * 100 / (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L));
+                CountdownData data = getTimeLeft();
 
-                long days = difference / (24L * 60L * 60L);
-                difference = difference % (24 * 60 * 60);
-
-                long hours = difference / (60 * 60);
-                difference = difference % (60 * 60);
-
-                long minutes = difference / 60;
-                difference = difference % 60;
-
-                long seconds = difference;
-
-                String timeLeft = days + "d  " + hours + "h  " + minutes + "m  " + seconds + "s";
+                String timeLeft = data.days + "d  " + data.hours + "h  " + data.minutes + "m  " + data.seconds + "s";
 
                 for(Updatable u : subscribers) {
-                    u.update(timeLeft, percentage);
+                    u.update(timeLeft, data.percentage);
                 }
             }
         };
+
+        am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
     public static CountdownComponent getInstance(Context context) {
@@ -73,6 +65,27 @@ public class CountdownComponent {
         }
 
         return mInstance;
+    }
+
+    public CountdownData getTimeLeft() {
+        Calendar c = Calendar.getInstance();
+        CountdownData data = new CountdownData();
+
+        long difference = (birthday.getTime() - c.getTimeInMillis() + (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L * 1000L)) / 1000;
+        data.percentage = 100 - (difference * 100 / (Constants.LIFE_EXPECTANCY[sexIndex] * 31536000L));
+
+        data.days = difference / (24L * 60L * 60L);
+        difference = difference % (24 * 60 * 60);
+
+        data.hours = difference / (60 * 60);
+        difference = difference % (60 * 60);
+
+        data.minutes = difference / 60;
+        difference = difference % 60;
+
+        data.seconds = difference;
+
+        return data;
     }
 
     public void refreshPreferences() {
@@ -87,13 +100,13 @@ public class CountdownComponent {
         String sex = preferences.getString(Constants.PREF_SEX, "");
         sexIndex = (sex.equals("Male")) ? 0 : 1;
     }
+
     public void register(Updatable u) {
         subscribers.add(u);
 
         if(countdownTimer == null) {
             countdownTimer = new Timer();
             countdownTimer.scheduleAtFixedRate(countdownTimerTask, 0, 1000);
-
         }
     }
 
@@ -106,7 +119,30 @@ public class CountdownComponent {
         }
     }
 
+    public void schedule(Schedulable s) {
+        PendingIntent pi = s.getAlarmIntent(this.context);
+        am.cancel(pi);
+        am.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), 60 * 1000, pi);
+    }
+
+    public void cancel(Schedulable s) {
+        PendingIntent pi = s.getAlarmIntent(this.context);
+        am.cancel(pi);
+    }
+
+    public interface Schedulable {
+        PendingIntent getAlarmIntent(Context context);
+    }
+
     public interface Updatable {
         void update(String timeLeft, long percentage);
+    }
+
+    public class CountdownData {
+        public long percentage;
+        public long days;
+        public long hours;
+        public long minutes;
+        public long seconds;
     }
 }

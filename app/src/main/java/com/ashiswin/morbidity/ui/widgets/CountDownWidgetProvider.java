@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.ashiswin.morbidity.components.CountdownComponent;
 import com.ashiswin.morbidity.utils.BootReceiver;
 import com.ashiswin.morbidity.R;
 import com.ashiswin.morbidity.utils.Schedulable;
@@ -18,33 +19,44 @@ import java.util.Calendar;
 /**
  * Implementation of App Widget functionality.
  */
-public class CountDownWidgetProvider extends AppWidgetProvider implements Schedulable {
-
+public class CountDownWidgetProvider extends AppWidgetProvider implements CountdownComponent.Schedulable {
     public static final String ACTION_UPDATE = "update please";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        String countDownDay = "20839";
-        Calendar c = Calendar.getInstance();
-        String countDownHour = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
-        String countDownMinute = String.format("%02d", c.get(Calendar.MINUTE));
+//        String countDownDay = "20839";
+//        Calendar c = Calendar.getInstance();
+
+//        String countDownHour = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
+//        String countDownMinute = String.format("%02d", c.get(Calendar.MINUTE));
+
+        CountdownComponent countdown = CountdownComponent.getInstance(context);
+        CountdownComponent.CountdownData data = countdown.getTimeLeft();
         updateAppWidgets(context, appWidgetManager, appWidgetIds,
-                         countDownDay, countDownHour, countDownMinute);
+                         data.days + "", data.hours + "", data.minutes + "");
     }
 
     @Override
     public void onEnabled(Context context) {
         // Tell scheduler to schedule widget for update
-        BootReceiver.register(this);
-        scheduleUpdates(context);
+        CountdownComponent countdown = CountdownComponent.getInstance(context);
+        countdown.schedule(this);
+
+        // TODO: Reenable BootReceiver registration
+//        BootReceiver.register(this);
+//        scheduleUpdates(context);
     }
 
     @Override
     public void onDisabled(Context context) {
         // Remove updating schedule from scheduler
-        BootReceiver.unregister(this);
-        Scheduler.clearUpdate(context, getAlarmIntent(context));
+        CountdownComponent countdown = CountdownComponent.getInstance(context);
+        countdown.cancel(this);
+
+        // TODO: Reenable BootReceiver registration
+//        BootReceiver.unregister(this);
+//        Scheduler.clearUpdate(context, getAlarmIntent(context));
     }
 
     @Override
@@ -59,10 +71,10 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Schedu
         } else super.onReceive(context, intent);
     }
 
-    public void scheduleUpdates(Context context) {
-        long intervalMillis = 60 * 1000;
-        Scheduler.scheduleUpdate(context, getAlarmIntent(context), intervalMillis);
-    }
+//    public void scheduleUpdates(Context context) {
+//        long intervalMillis = 60 * 1000;
+//        Scheduler.scheduleUpdate(context, getAlarmIntent(context), intervalMillis);
+//    }
 
     private void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
                                   int[] appWidgetIds, String countDownDay,
@@ -80,7 +92,7 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Schedu
         }
     }
 
-    private PendingIntent getAlarmIntent(Context context) {
+    public PendingIntent getAlarmIntent(Context context) {
         Intent intent = new Intent(context, CountDownWidgetProvider.class);
         intent.setAction(CountDownWidgetProvider.ACTION_UPDATE);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
