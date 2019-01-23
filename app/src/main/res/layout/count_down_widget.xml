@@ -71,6 +71,7 @@
                 android:layout_below="@id/count_down_day"
                 android:layout_centerHorizontal="true"
                 android:text="@string/day"
+                android:textColor="@color/textWhite"
                 android:textAllCaps="true"
                 android:textSize="@dimen/widget_clock_text_size"
                 />
@@ -107,6 +108,7 @@
                 android:layout_below="@id/count_down_hour"
                 android:layout_centerHorizontal="true"
                 android:text="@string/hour"
+                android:textColor="@color/textWhite"
                 android:textAllCaps="true"
                 android:textSize="@dimen/widget_clock_text_size"
                 />
@@ -144,6 +146,7 @@
                 android:layout_below="@id/count_down_minute"
                 android:layout_centerHorizontal="true"
                 android:text="@string/minute"
+                android:textColor="@color/textWhite"
                 android:textAllCaps="true"
                 android:textSize="@dimen/widget_clock_text_size"
                 />
