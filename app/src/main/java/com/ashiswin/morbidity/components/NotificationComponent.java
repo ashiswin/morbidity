@@ -39,6 +39,7 @@ public class NotificationComponent implements CountdownComponent.Updatable {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(launchPendingIntent);
 
+        // Android O specific notification channel stuff
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Morbidity Channel";
             String description = "Morbidity's Channel";
