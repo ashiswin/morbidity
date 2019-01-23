@@ -15,9 +15,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <receiver
-            android:name=".components.NotificationReceiver"
+            android:name=".components.NotificationCancelledReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
+        <receiver
+            android:name=".components.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
         <receiver android:name=".ui.widgets.CountDownWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -30,6 +34,7 @@
 
         <activity
             android:name=".ui.HomeActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.SettingsActivity"

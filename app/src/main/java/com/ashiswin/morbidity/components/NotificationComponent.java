@@ -20,8 +20,8 @@ public class NotificationComponent implements CountdownComponent.Schedulable {
     private static NotificationComponent mInstance;
     private Context context;
 
-
     private static final int LAUNCH_ACTIVITY_PENDING_INTENT = 0;
+    private static final int DELETE_PENDING_INTENT = 1;
 
     private NotificationCompat.Builder mBuilder;
     private NotificationManagerCompat notificationManager;
@@ -42,14 +42,16 @@ public class NotificationComponent implements CountdownComponent.Schedulable {
         Intent launchIntent = new Intent(context, HomeActivity.class);
         PendingIntent launchPendingIntent = PendingIntent.getActivity(context, LAUNCH_ACTIVITY_PENDING_INTENT, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        // TODO: Prevent opening activity if activity already open
+        Intent deleteIntent = new Intent(context, NotificationCancelledReceiver.class);
+        PendingIntent deletePendingIntent = PendingIntent.getBroadcast(context, DELETE_PENDING_INTENT, deleteIntent, 0);
 
         mBuilder = new NotificationCompat.Builder(context, "MorbidityChannel")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setOngoing(false)
                 .setOnlyAlertOnce(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(launchPendingIntent);
+                .setContentIntent(launchPendingIntent)
+                .setDeleteIntent(deletePendingIntent);
 
         // Android O specific notification channel stuff
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.ashiswin.morbidity.utils.Constants;
 
@@ -28,7 +29,6 @@ public class CountdownComponent {
 
     private AlarmManager am = null;
     private Timer countdownTimer = null;
-    private TimerTask countdownTimerTask = null;
     private Context context;
 
     private ArrayList<Updatable> subscribers = new ArrayList<>();
@@ -41,7 +41,19 @@ public class CountdownComponent {
 
         refreshPreferences();
 
-        countdownTimerTask = new TimerTask() {
+        am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    }
+
+    public static CountdownComponent getInstance(Context context) {
+        if(mInstance == null) {
+            mInstance = new CountdownComponent(context);
+        }
+
+        return mInstance;
+    }
+
+    public TimerTask getCountdownTimerTask() {
+        return new TimerTask() {
             @Override
             public void run() {
                 if(birthday == null) return;
@@ -55,16 +67,6 @@ public class CountdownComponent {
                 }
             }
         };
-
-        am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-    }
-
-    public static CountdownComponent getInstance(Context context) {
-        if(mInstance == null) {
-            mInstance = new CountdownComponent(context);
-        }
-
-        return mInstance;
     }
 
     public CountdownData getTimeLeft() {
@@ -106,7 +108,7 @@ public class CountdownComponent {
 
         if(countdownTimer == null) {
             countdownTimer = new Timer();
-            countdownTimer.scheduleAtFixedRate(countdownTimerTask, 0, 1000);
+            countdownTimer.scheduleAtFixedRate(getCountdownTimerTask(), 0, 1000);
         }
     }
 
