@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.utils;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,8 +11,9 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import com.ashiswin.morbidity.R;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class BootReceiver extends BroadcastReceiver {
 

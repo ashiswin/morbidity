@@ -8,10 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.ashiswin.morbidity.BootReceiver;
+import com.ashiswin.morbidity.utils.BootReceiver;
 import com.ashiswin.morbidity.R;
-import com.ashiswin.morbidity.Schedulable;
-import com.ashiswin.morbidity.Scheduler;
+import com.ashiswin.morbidity.utils.Schedulable;
+import com.ashiswin.morbidity.utils.Scheduler;
 
 import java.util.Calendar;
 

@@ -33,10 +33,8 @@ public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
         final String url = "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=1";
         // final String url ="https://quotes.rest/qod";
 
-        final String default_quote = context.getString(R.string.default_quote);
-        final String default_author = context.getString(R.string.default_author);
-
         // Set up logging
+        final String TAG = "Motivational Widget";
         VolleyLog.setTag("Volley");
         Log.isLoggable("Volley", Log.VERBOSE);
 
@@ -53,21 +51,17 @@ public class MotivationalQuoteWidgetProvider extends AppWidgetProvider {
                         quoteObject = response.getJSONObject(0);
                         quote = quoteObject.getString("quote");
                         author = quoteObject.getString("author");
+                        updateAppWidgets(context, appWidgetManager, appWidgetIds,
+                                         quote, author);
                     } catch (Exception e) {
-                        quote = default_quote;
-                        author = default_author;
-                        Log.e("Read Json Object", "onResponse: ", e);
+                        Log.e(TAG, "Volley: ", e);
                     }
-
-                    updateAppWidgets(context, appWidgetManager, appWidgetIds,
-                                     quote, author);
                 }
             }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    updateAppWidgets(context, appWidgetManager, appWidgetIds,
-                                     default_quote, default_author);
+                    Log.e(TAG, "Volley: ", error);
                 }
             })
         {

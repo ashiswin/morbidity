@@ -1,4 +1,4 @@
-package com.ashiswin.morbidity;
+package com.ashiswin.morbidity.utils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
