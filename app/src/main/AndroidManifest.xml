@@ -14,11 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <service
-            android:name=".components.NotificationService"
-            android:exported="true"
-            android:enabled="true" />
-
+        <receiver
+            android:name=".components.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
         <receiver android:name=".ui.widgets.CountDownWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
