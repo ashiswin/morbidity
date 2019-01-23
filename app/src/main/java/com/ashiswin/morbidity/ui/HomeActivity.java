@@ -69,7 +69,9 @@ public class HomeActivity extends AppCompatActivity {
 
         countdown.register(wrpTimeLeft);
         countdown.register(wrpPercentage);
-        countdown.register(notification);
+
+        notification.startService();
+        countdown.schedule(notification);
     }
 
     @Override

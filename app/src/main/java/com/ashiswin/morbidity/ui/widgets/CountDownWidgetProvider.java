@@ -24,13 +24,6 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Countd
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
-//        String countDownDay = "20839";
-//        Calendar c = Calendar.getInstance();
-
-//        String countDownHour = String.format("%02d", c.get(Calendar.HOUR_OF_DAY));
-//        String countDownMinute = String.format("%02d", c.get(Calendar.MINUTE));
-
         CountdownComponent countdown = CountdownComponent.getInstance(context);
         CountdownComponent.CountdownData data = countdown.getTimeLeft();
         updateAppWidgets(context, appWidgetManager, appWidgetIds,
@@ -45,7 +38,6 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Countd
 
         // TODO: Reenable BootReceiver registration
 //        BootReceiver.register(this);
-//        scheduleUpdates(context);
     }
 
     @Override
@@ -56,7 +48,6 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Countd
 
         // TODO: Reenable BootReceiver registration
 //        BootReceiver.unregister(this);
-//        Scheduler.clearUpdate(context, getAlarmIntent(context));
     }
 
     @Override
@@ -70,11 +61,6 @@ public class CountDownWidgetProvider extends AppWidgetProvider implements Countd
 
         } else super.onReceive(context, intent);
     }
-
-//    public void scheduleUpdates(Context context) {
-//        long intervalMillis = 60 * 1000;
-//        Scheduler.scheduleUpdate(context, getAlarmIntent(context), intervalMillis);
-//    }
 
     private void updateAppWidgets(Context context, AppWidgetManager appWidgetManager,
                                   int[] appWidgetIds, String countDownDay,
